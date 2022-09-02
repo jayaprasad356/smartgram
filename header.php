@@ -170,6 +170,42 @@ $fn = new custom_functions;
                         <span>Products</span>
                     </a>
                 </li>
+                <li class="treeview">
+                    <a href="slides.php">
+                        <i class="fa fa-sliders"></i>
+                        <span>Slides</span>
+                    </a>
+                </li>
+                <li class="treeview">
+                    <a href="users.php">
+                        <i class="fa fa-user"></i>
+                        <span>Users</span>
+                    </a>
+                </li>
+                <li class="treeview">
+                    <a href="addresses.php">
+                        <i class="fa fa-home"></i>
+                        <span>Addresses</span>
+                    </a>
+                </li>
+                <li class="treeview">
+                    <a href="doctors.php">
+                        <i class="fa fa-bullseye"></i>
+                        <span>Doctors</span>
+                    </a>
+                </li>
+                <li class="treeview">
+                    <a href="appointments.php">
+                        <i class="fa fa-bullseye"></i>
+                        <span>Appointments</span>
+                    </a>
+                </li>
+                <li class="treeview">
+                    <a href="orders.php">
+                        <i class="fa fa-shopping-cart"></i>
+                        <span>Orders</span>
+                    </a>
+                </li>
             </ul>
             </section>
             <!-- /.sidebar -->

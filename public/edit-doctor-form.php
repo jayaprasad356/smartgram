@@ -13,33 +13,31 @@ if (isset($_GET['id'])) {
     return false;
     exit(0);
 }
-$sql = "SELECT * FROM `models`";
-$db->sql($sql);
-$model_res = $db->getResult();
+
 if (isset($_POST['btnEdit'])) {
 
-	    $category = $db->escapeString(($_POST['category']));
-	    $product_name = $db->escapeString($_POST['product_name']);
-        $brand = $db->escapeString($_POST['brand']);
-        $description = $db->escapeString($_POST['description']);
+	    $name = $db->escapeString(($_POST['name']));
+	    $role = $db->escapeString($_POST['role']);
+        $experience = $db->escapeString($_POST['experience']);
+        $fees = $db->escapeString($_POST['fees']);
 		$error = array();
 
-		if (empty($category)) {
-            $error['category'] = " <span class='label label-danger'>Required!</span>";
+		if (empty($name)) {
+            $error['name'] = " <span class='label label-danger'>Required!</span>";
         }
-        if (empty($product_name)) {
-            $error['product_name'] = " <span class='label label-danger'>Required!</span>";
+        if (empty($role)) {
+            $error['role'] = " <span class='label label-danger'>Required!</span>";
         }
-        if (empty($brand)) {
-            $error['brand'] = " <span class='label label-danger'>Required!</span>";
+        if (empty($experience)) {
+            $error['experience'] = " <span class='label label-danger'>Required!</span>";
         }
-        if (empty($description)) {
-            $error['description'] = " <span class='label label-danger'>Required!</span>";
+        if (empty($fees)) {
+            $error['fees'] = " <span class='label label-danger'>Required!</span>";
         }
 
 		
 
-		if ( !empty($category) && !empty($product_name) && !empty($brand) && !empty($description)) 
+		if ( !empty($name) && !empty($role) && !empty($experience) && !empty($fees)) 
 		{
 			if ($_FILES['image']['size'] != 0 && $_FILES['image']['error'] == 0 && !empty($_FILES['image'])) {
 				//image isn't empty and update the image
@@ -47,7 +45,7 @@ if (isset($_POST['btnEdit'])) {
 				$extension = pathinfo($_FILES["image"]["name"])['extension'];
 		
 				$result = $fn->validate_image($_FILES["image"]);
-				$target_path = 'upload/products/';
+				$target_path = 'upload/doctors/';
 				
 				$filename = microtime(true) . '.' . strtolower($extension);
 				$full_path = $target_path . "" . $filename;
@@ -59,12 +57,12 @@ if (isset($_POST['btnEdit'])) {
 				if (!empty($old_image)) {
 					unlink($old_image);
 				}
-				$upload_image = 'upload/products/' . $filename;
-				$sql = "UPDATE products SET `image`='" . $upload_image . "' WHERE `id`=" . $ID;
+				$upload_image = 'upload/doctors/' . $filename;
+				$sql = "UPDATE doctors SET `image`='" . $upload_image . "' WHERE `id`=" . $ID;
 				$db->sql($sql);
 			}
 			
-             $sql_query = "UPDATE products SET category_id='$category',product_name='$product_name',brand='$brand',description='$description' WHERE id =  $ID";
+             $sql_query = "UPDATE doctors SET name='$name',role='$role',experience='$experience',fees='$fees' WHERE id =  $ID";
 			 $db->sql($sql_query);
 			 $res = $db->getResult();
              $update_result = $db->getResult();
@@ -76,9 +74,9 @@ if (isset($_POST['btnEdit'])) {
 
 			// check update result
 			if ($update_result == 1) {
-			    $error['update_product'] = " <section class='content-header'><span class='label label-success'>Product updated Successfully</span></section>";
+			    $error['update_doctor'] = " <section class='content-header'><span class='label label-success'>Doctor updated Successfully</span></section>";
 			} else {
-				$error['update_product'] = " <span class='label label-danger'>Failed to update</span>";
+				$error['update_doctor'] = " <span class='label label-danger'>Failed to update</span>";
 			}
 		}
 	} 
@@ -87,19 +85,19 @@ if (isset($_POST['btnEdit'])) {
 // create array variable to store previous data
 $data = array();
 
-$sql_query = "SELECT * FROM products WHERE id =" . $ID;
+$sql_query = "SELECT * FROM doctors WHERE id =" . $ID;
 $db->sql($sql_query);
 $res = $db->getResult();
 
 if (isset($_POST['btnCancel'])) { ?>
 	<script>
-		window.location.href = "products.php";
+		window.location.href = "doctors.php";
 	</script>
 <?php } ?>
 <section class="content-header">
 	<h1>
-		Edit Product<small><a href='products.php'><i class='fa fa-angle-double-left'></i>&nbsp;&nbsp;&nbsp;Back to Products</a></small></h1>
-	<small><?php echo isset($error['update_product']) ? $error['update_product'] : ''; ?></small>
+		Edit Doctor<small><a href='doctors.php'><i class='fa fa-angle-double-left'></i>&nbsp;&nbsp;&nbsp;Back to Doctors</a></small></h1>
+	<small><?php echo isset($error['update_doctor']) ? $error['update_doctor'] : ''; ?></small>
 	<ol class="breadcrumb">
 		<li><a href="home.php"><i class="fa fa-home"></i> Home</a></li>
 	</ol>
@@ -108,7 +106,7 @@ if (isset($_POST['btnCancel'])) { ?>
 	<!-- Main row -->
 
 	<div class="row">
-		<div class="col-md-12">
+		<div class="col-md-10">
 		
 			<!-- general form elements -->
 			<div class="box box-primary">
@@ -122,28 +120,12 @@ if (isset($_POST['btnCancel'])) { ?>
 						   <div class="row">
 							    <div class="form-group">
 									<div class='col-md-4'>
-									          <label for="exampleInputEmail1">Model</label> <i class="text-danger asterik">*</i>
-												<select id='category' name="category" class='form-control' required>
-                                                <option value="none">Select</option>
-                                                            <?php
-                                                            $sql = "SELECT * FROM `categories`";
-                                                            $db->sql($sql);
-
-                                                            $result = $db->getResult();
-                                                            foreach ($result as $value) {
-                                                            ?>
-															 <option value='<?= $value['id'] ?>' <?= $value['id']==$res[0]['category_id'] ? 'selected="selected"' : '';?>><?= $value['name'] ?></option>
-                                                               
-                                                            <?php } ?>
-                                                </select>
+									          <label for="exampleInputEmail1">Name</label> <i class="text-danger asterik">*</i>
+											  <input type="text" class="form-control" name="name" value="<?php echo $res[0]['name']; ?>">
 									</div>
 									 <div class="col-md-4">
-										<label for="exampleInputEmail1">Product Name</label><?php echo isset($error['product_name']) ? $error['product_name'] : ''; ?>
-										<input type="text" class="form-control" name="product_name" value="<?php echo $res[0]['product_name']; ?>">
-									 </div>
-									 <div class="col-md-4">
-										<label for="exampleInputEmail1">Brand</label><?php echo isset($error['brand']) ? $error['brand'] : ''; ?>
-										<input type="text" class="form-control" name="brand" value="<?php echo $res[0]['brand']; ?>">
+										<label for="exampleInputEmail1">Role</label><i class="text-danger asterik">*</i>
+										<input type="text" class="form-control" name="role" value="<?php echo $res[0]['role']; ?>">
 									 </div>
 								</div>
 						   </div>
@@ -151,10 +133,19 @@ if (isset($_POST['btnCancel'])) { ?>
 						   <div class="row">
 							    <div class="form-group">
 									 <div class="col-md-4">
-										<label for="exampleInputEmail1">Description</label><?php echo isset($error['description']) ? $error['description'] : ''; ?>
-										<input type="text" class="form-control" name="description" value="<?php echo $res[0]['description']; ?>">
+										<label for="exampleInputEmail1">Experience</label><i class="text-danger asterik">*</i>
+										<input type="text" class="form-control" name="experience" value="<?php echo $res[0]['experience']; ?>">
 									 </div>
 									 <div class="col-md-4">
+										<label for="exampleInputEmail1">Fees</label><i class="text-danger asterik">*</i>
+										<input type="text" class="form-control" name="fees" value="<?php echo $res[0]['fees']; ?>">
+									 </div>
+								</div>
+						   </div>
+						   <hr>
+						   <div class="row">
+								<div class="form-group">
+								   <div class="col-md-4">
 									     <label for="exampleInputFile">Image</label>
                                         
                                         <input type="file" accept="image/png,  image/jpeg" onchange="readURL(this);"  name="image" id="image">
@@ -163,7 +154,6 @@ if (isset($_POST['btnCancel'])) { ?>
 								</div>
 						   </div>
 						   <hr>
-						   
 					
 						</div><!-- /.box-body -->
                        
@@ -195,3 +185,5 @@ if (isset($_POST['btnCancel'])) { ?>
         }
 </script>
 <?php $db->disconnect(); ?>
+
+

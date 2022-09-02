@@ -23,12 +23,12 @@
 <?php include "header.php";?>
 <html>
 <head>
-<title>Products | - Dashboard</title>
+<title>Users | - Dashboard</title>
 </head>
 </body>
       <!-- Content Wrapper. Contains page content -->
       <div class="content-wrapper">
-        <?php include('public/products-table.php'); ?>
+        <?php include('public/users-table.php'); ?>
       </div><!-- /.content-wrapper -->
   </body>
 </html>

@@ -43,64 +43,124 @@ if (isset($config['system_timezone']) && isset($config['system_timezone_gmt'])) 
     date_default_timezone_set('Asia/Kolkata');
     $db->sql("SET `time_zone` = '+05:30'");
 }
-// if (isset($_GET['table']) && $_GET['table'] == 'users') {
-//     $offset = 0;
-//     $limit = 10;
-//     $where = '';
-//     $sort = 'id';
-//     $order = 'DESC';
-//     if (isset($_GET['offset']))
-//         $offset = $db->escapeString($fn->xss_clean($_GET['offset']));
-//     if (isset($_GET['limit']))
-//         $limit = $db->escapeString($fn->xss_clean($_GET['limit']));
+if (isset($_GET['table']) && $_GET['table'] == 'users') {
+    $offset = 0;
+    $limit = 10;
+    $where = '';
+    $sort = 'id';
+    $order = 'DESC';
+    if (isset($_GET['offset']))
+        $offset = $db->escapeString($fn->xss_clean($_GET['offset']));
+    if (isset($_GET['limit']))
+        $limit = $db->escapeString($fn->xss_clean($_GET['limit']));
 
-//     if (isset($_GET['sort']))
-//         $sort = $db->escapeString($fn->xss_clean($_GET['sort']));
-//     if (isset($_GET['order']))
-//         $order = $db->escapeString($fn->xss_clean($_GET['order']));
+    if (isset($_GET['sort']))
+        $sort = $db->escapeString($fn->xss_clean($_GET['sort']));
+    if (isset($_GET['order']))
+        $order = $db->escapeString($fn->xss_clean($_GET['order']));
 
-//     if (isset($_GET['search']) && !empty($_GET['search'])) {
-//         $search = $db->escapeString($fn->xss_clean($_GET['search']));
-//         $where .= "WHERE name like '%" . $search . "%' OR mobile like '%" . $search . "%'";
-//     }
-//     if (isset($_GET['sort'])){
-//         $sort = $db->escapeString($_GET['sort']);
+    if (isset($_GET['search']) && !empty($_GET['search'])) {
+        $search = $db->escapeString($fn->xss_clean($_GET['search']));
+        $where .= "WHERE name like '%" . $search . "%' OR mobile like '%" . $search . "%'";
+    }
+    if (isset($_GET['sort'])){
+        $sort = $db->escapeString($_GET['sort']);
 
-//     }
-//     if (isset($_GET['order'])){
-//         $order = $db->escapeString($_GET['order']);
+    }
+    if (isset($_GET['order'])){
+        $order = $db->escapeString($_GET['order']);
 
-//     }        
-//     $sql = "SELECT COUNT(`id`) as total FROM `users`" . $where;
-//     $db->sql($sql);
-//     $res = $db->getResult();
-//     foreach ($res as $row)
-//         $total = $row['total'];
+    }        
+    $sql = "SELECT COUNT(`id`) as total FROM `users`" . $where;
+    $db->sql($sql);
+    $res = $db->getResult();
+    foreach ($res as $row)
+        $total = $row['total'];
 
-//     $sql = "SELECT * FROM users ". $where ." ORDER BY " . $sort . " " . $order . " LIMIT " . $offset . "," . $limit;
-//     $db->sql($sql);
-//     $res = $db->getResult();
+    $sql = "SELECT * FROM users ". $where ." ORDER BY " . $sort . " " . $order . " LIMIT " . $offset . "," . $limit;
+    $db->sql($sql);
+    $res = $db->getResult();
 
-//     $bulkData = array();
-//     $bulkData['total'] = $total;
+    $bulkData = array();
+    $bulkData['total'] = $total;
 
-//     $rows = array();
-//     $tempRow = array();
-//     foreach ($res as $row) {
+    $rows = array();
+    $tempRow = array();
+    foreach ($res as $row) {
 
-//         $operate = '<a href="users.php?id=' . $row['id'] . '" title="View">view</a>';
- 
-        
-//         $tempRow['id'] = $row['id'];
-//         $tempRow['name'] = $row['name'];
-//         $tempRow['mobile'] = $row['mobile'];
-//         $tempRow['status'] = $row['status'];
-//         $tempRow['operate'] = $operate;
-//         $rows[] = $tempRow;
-//         }
-//     $bulkData['rows'] = $rows;
-//     print_r(json_encode($bulkData));
-// }
+        $tempRow['id'] = $row['id'];
+        $tempRow['name'] = $row['name'];
+        $tempRow['mobile'] = $row['mobile'];
+        $tempRow['password'] = $row['password'];
+        $tempRow['occupation'] = $row['occupation'];
+        $tempRow['gender'] = $row['gender'];
+        $tempRow['email'] = $row['email'];
+        $rows[] = $tempRow;
+        }
+    $bulkData['rows'] = $rows;
+    print_r(json_encode($bulkData));
+}
+if (isset($_GET['table']) && $_GET['table'] == 'addresses') {
+    $offset = 0;
+    $limit = 10;
+    $where = '';
+    $sort = 'id';
+    $order = 'DESC';
+    if (isset($_GET['offset']))
+        $offset = $db->escapeString($fn->xss_clean($_GET['offset']));
+    if (isset($_GET['limit']))
+        $limit = $db->escapeString($fn->xss_clean($_GET['limit']));
+
+    if (isset($_GET['sort']))
+        $sort = $db->escapeString($fn->xss_clean($_GET['sort']));
+    if (isset($_GET['order']))
+        $order = $db->escapeString($fn->xss_clean($_GET['order']));
+
+    if (isset($_GET['search']) && !empty($_GET['search'])) {
+        $search = $db->escapeString($fn->xss_clean($_GET['search']));
+        $where .= "WHERE name like '%" . $search . "%' OR address like '%" . $search . "%' OR city like '%" . $search . "%' OR pincode like '%" . $search . "%' OR state like '%" . $search . "%'";
+    }
+    if (isset($_GET['sort'])){
+        $sort = $db->escapeString($_GET['sort']);
+
+    }
+    if (isset($_GET['order'])){
+        $order = $db->escapeString($_GET['order']);
+
+    }        
+    $sql = "SELECT COUNT(`id`) as total FROM `addresses`" . $where;
+    $db->sql($sql);
+    $res = $db->getResult();
+    foreach ($res as $row)
+        $total = $row['total'];
+
+    $sql = "SELECT * FROM addresses ". $where ." ORDER BY " . $sort . " " . $order . " LIMIT " . $offset . "," . $limit;
+    $db->sql($sql);
+    $res = $db->getResult();
+
+    $bulkData = array();
+    $bulkData['total'] = $total;
+
+    $rows = array();
+    $tempRow = array();
+    foreach ($res as $row) {
+
+        $operate = '<a href="view-address.php?id=' . $row['id'] . '" class="label label-primary" title="View">View</a>';
+        $tempRow['id'] = $row['id'];
+        $tempRow['user_id'] = $row['user_id'];
+        $tempRow['address'] = $row['address'];
+        $tempRow['landmark'] = $row['landmark'];
+        $tempRow['city'] = $row['city'];
+        $tempRow['district'] = $row['district'];
+        $tempRow['pincode'] = $row['pincode'];
+        $tempRow['state'] = $row['state'];
+        $tempRow['country'] = $row['country'];
+        $tempRow['operate'] = $operate;
+        $rows[] = $tempRow;
+        }
+    $bulkData['rows'] = $rows;
+    print_r(json_encode($bulkData));
+}
 if (isset($_GET['table']) && $_GET['table'] == 'categories') {
 
     $offset = 0;
@@ -228,267 +288,277 @@ if (isset($_GET['table']) && $_GET['table'] == 'products') {
     $bulkData['rows'] = $rows;
     print_r(json_encode($bulkData));
 }
-// if (isset($_GET['table']) && $_GET['table'] == 'slides') {
+if (isset($_GET['table']) && $_GET['table'] == 'slides') {
 
-//     $offset = 0;
-//     $limit = 10;
-//     $sort = 'id';
-//     $order = 'DESC';
-//     $where = '';
-//     if (isset($_GET['offset']))
-//         $offset = $db->escapeString($fn->xss_clean($_GET['offset']));
-//     if (isset($_GET['limit']))
-//         $limit = $db->escapeString($fn->xss_clean($_GET['limit']));
+    $offset = 0;
+    $limit = 10;
+    $sort = 'id';
+    $order = 'DESC';
+    $where = '';
+    if (isset($_GET['offset']))
+        $offset = $db->escapeString($fn->xss_clean($_GET['offset']));
+    if (isset($_GET['limit']))
+        $limit = $db->escapeString($fn->xss_clean($_GET['limit']));
 
-//     if (isset($_GET['sort']))
-//         $sort = $db->escapeString($fn->xss_clean($_GET['sort']));
-//     if (isset($_GET['order']))
-//         $order = $db->escapeString($fn->xss_clean($_GET['order']));
+    if (isset($_GET['sort']))
+        $sort = $db->escapeString($fn->xss_clean($_GET['sort']));
+    if (isset($_GET['order']))
+        $order = $db->escapeString($fn->xss_clean($_GET['order']));
 
-//     if (isset($_GET['search']) && !empty($_GET['search'])) {
-//         $search = $db->escapeString($fn->xss_clean($_GET['search']));
-//         $where .= "WHERE name like '%" . $search . "%' OR status like '%" . $search . "%'";
-//     }
-//     if (isset($_GET['sort'])){
-//         $sort = $db->escapeString($_GET['sort']);
+    if (isset($_GET['search']) && !empty($_GET['search'])) {
+        $search = $db->escapeString($fn->xss_clean($_GET['search']));
+        $where .= "WHERE name like '%" . $search . "%' OR status like '%" . $search . "%'";
+    }
+    if (isset($_GET['sort'])){
+        $sort = $db->escapeString($_GET['sort']);
 
-//     }
-//     if (isset($_GET['order'])){
-//         $order = $db->escapeString($_GET['order']);
+    }
+    if (isset($_GET['order'])){
+        $order = $db->escapeString($_GET['order']);
 
-//     }
-//     $sql = "SELECT COUNT(`id`) as total FROM `slides` ";
-//     $db->sql($sql);
-//     $res = $db->getResult();
-//     foreach ($res as $row)
-//         $total = $row['total'];
+    }
+    $sql = "SELECT COUNT(`id`) as total FROM `slides` ";
+    $db->sql($sql);
+    $res = $db->getResult();
+    foreach ($res as $row)
+        $total = $row['total'];
 
-//     $sql = "SELECT * FROM `slides` ". $where ." ORDER BY " . $sort . " " . $order . " LIMIT " . $offset . "," . $limit;
-//     $db->sql($sql);
-//     $res = $db->getResult();
+    $sql = "SELECT * FROM `slides` ". $where ." ORDER BY " . $sort . " " . $order . " LIMIT " . $offset . "," . $limit;
+    $db->sql($sql);
+    $res = $db->getResult();
 
-//     $bulkData = array();
-//     $bulkData['total'] = $total;
+    $bulkData = array();
+    $bulkData['total'] = $total;
     
-//     $rows = array();
-//     $tempRow = array();
+    $rows = array();
+    $tempRow = array();
 
-//     foreach ($res as $row) {
+    foreach ($res as $row) {
 
-//         $operate = ' <a class="text text-danger" href="delete-slide.php?id=' . $row['id'] . '"><i class="fa fa-trash"></i>Delete</a>';
+        $operate = ' <a class="text text-danger" href="delete-slide.php?id=' . $row['id'] . '"><i class="fa fa-trash"></i>Delete</a>';
 
-//         $tempRow['id'] = $row['id'];
-//         $tempRow['name'] = $row['name'];
-//         if(!empty($row['image'])){
-//             $tempRow['image'] = "<a data-lightbox='category' href='" . $row['image'] . "' data-caption='" . $row['name'] . "'><img src='" . $row['image'] . "' title='" . $row['name'] . "' height='50' /></a>";
+        $tempRow['id'] = $row['id'];
+        $tempRow['name'] = $row['name'];
+        if(!empty($row['image'])){
+            $tempRow['image'] = "<a data-lightbox='category' href='" . $row['image'] . "' data-caption='" . $row['name'] . "'><img src='" . $row['image'] . "' title='" . $row['name'] . "' height='50' /></a>";
 
-//         }else{
-//             $tempRow['image'] = 'No Image';
+        }else{
+            $tempRow['image'] = 'No Image';
 
-//         }
-//         $tempRow['status'] = $row['status'];
-//         if ($row['status'] == 1)
-//             $tempRow['status'] = "<p class='text text-success'> Active</p>";
-//         else 
-//             $tempRow['status'] = "<p class='text text-success'>Inactive</p>";
-//        $tempRow['operate'] = $operate;
-//         $rows[] = $tempRow;
-//     }
-//     $bulkData['rows'] = $rows;
-//     print_r(json_encode($bulkData));
-// }
+        }
+        $tempRow['status'] = $row['status'];
+        if ($row['status'] == 1)
+            $tempRow['status'] = "<p class='text text-success'> Active</p>";
+        else 
+            $tempRow['status'] = "<p class='text text-success'>Inactive</p>";
+       $tempRow['operate'] = $operate;
+        $rows[] = $tempRow;
+    }
+    $bulkData['rows'] = $rows;
+    print_r(json_encode($bulkData));
+}
 
-// if (isset($_GET['table']) && $_GET['table'] == 'orders') {
+if (isset($_GET['table']) && $_GET['table'] == 'orders') {
 
-//     $offset = 0;
-//     $limit = 10;
-//     $sort = 'id';
-//     $order = 'DESC';
-//     $where = '';
-//     if (isset($_GET['offset']))
-//         $offset = $db->escapeString($fn->xss_clean($_GET['offset']));
-//     if (isset($_GET['limit']))
-//         $limit = $db->escapeString($fn->xss_clean($_GET['limit']));
+    $offset = 0;
+    $limit = 10;
+    $sort = 'id';
+    $order = 'DESC';
+    $where = '';
+    if (isset($_GET['offset']))
+        $offset = $db->escapeString($fn->xss_clean($_GET['offset']));
+    if (isset($_GET['limit']))
+        $limit = $db->escapeString($fn->xss_clean($_GET['limit']));
 
-//     if (isset($_GET['sort']))
-//         $sort = $db->escapeString($fn->xss_clean($_GET['sort']));
-//     if (isset($_GET['order']))
-//         $order = $db->escapeString($fn->xss_clean($_GET['order']));
+    if (isset($_GET['sort']))
+        $sort = $db->escapeString($fn->xss_clean($_GET['sort']));
+    if (isset($_GET['order']))
+        $order = $db->escapeString($fn->xss_clean($_GET['order']));
 
-//     if (isset($_GET['search']) && !empty($_GET['search'])) {
-//         $search = $db->escapeString($fn->xss_clean($_GET['search']));
-//         $where .= "WHERE product_name like '%" . $search . "%' OR brand like '%" . $search . "%'OR status like '%" . $search . "%'OR mobile like '%" . $search . "%'";
-//     }
-//     if (isset($_GET['sort'])){
-//         $sort = $db->escapeString($_GET['sort']);
+    if (isset($_GET['search']) && !empty($_GET['search'])) {
+        $search = $db->escapeString($fn->xss_clean($_GET['search']));
+        $where .= "WHERE product_name like '%" . $search . "%' OR brand like '%" . $search . "%'OR status like '%" . $search . "%'OR mobile like '%" . $search . "%'";
+    }
+    if (isset($_GET['sort'])){
+        $sort = $db->escapeString($_GET['sort']);
 
-//     }
-//     if (isset($_GET['order'])){
-//         $order = $db->escapeString($_GET['order']);
-//     }
-//     $sql = "SELECT COUNT(`id`) as total FROM `orders` ";
-//     $db->sql($sql);
-//     $res = $db->getResult();
-//     foreach ($res as $row)
-//         $total = $row['total'];
+    }
+    if (isset($_GET['order'])){
+        $order = $db->escapeString($_GET['order']);
+    }
+    $sql = "SELECT COUNT(`id`) as total FROM `orders` ";
+    $db->sql($sql);
+    $res = $db->getResult();
+    foreach ($res as $row)
+        $total = $row['total'];
 
-//     $sql = "SELECT *,orders.id AS id,orders.status AS status,products.image AS image FROM orders,products WHERE orders.product_id=products.id ";
-//     $db->sql($sql);
-//     $res = $db->getResult();
+    $sql = "SELECT *,orders.id AS id,orders.status AS status FROM orders,products,users WHERE users.id=orders.user_id AND orders.product_id=products.id";
+    $db->sql($sql);
+    $res = $db->getResult();
 
     
-//     $bulkData = array();
-//     $bulkData['total'] = $total;
+    $bulkData = array();
+    $bulkData['total'] = $total;
     
-//     $rows = array();
-//     $tempRow = array();
+    $rows = array();
+    $tempRow = array();
 
-//     foreach ($res as $row) {
+    foreach ($res as $row) {
 
-//         $operate = '<a href="view-order.php?id=' . $row['id'] . '" class="label label-primary" title="View">View</a>';
-//         $tempRow['id'] = $row['id'];
-//         $tempRow['mobile'] = $row['mobile'];
-//         $tempRow['name'] = $row['name'];
-//         $tempRow['product_name'] = $row['product_name'];
-//         $tempRow['brand'] = $row['brand'];
-//         $tempRow['status'] = $row['status'];
-//         if($row['status']== '1'){
-//             $tempRow['status'] = '<p class="text text-success">Booked</p>';
-//         }else{
-//             $tempRow['status'] = '<p class="text text-danger">Not Booked</p>';
-//         }
-//         if(!empty($row['image'])){
-//             $tempRow['image'] = "<a data-lightbox='category' href='" . $row['image'] . "' data-caption='" . $row['name'] . "'><img src='" . $row['image'] . "' title='" . $row['name'] . "' height='50' /></a>";
+        $operate = '<a href="view-order.php?id=' . $row['id'] . '" class="label label-primary" title="View">View</a>';
+        $tempRow['id'] = $row['id'];
+        $tempRow['name'] = $row['name'];
+        $tempRow['mobile'] = $row['mobile'];
+        $tempRow['product_name'] = $row['product_name'];
+        $tempRow['brand'] = $row['brand'];
+        if(!empty($row['image'])){
+            $tempRow['image'] = "<a data-lightbox='category' href='" . $row['image'] . "' data-caption='" . $row['name'] . "'><img src='" . $row['image'] . "' title='" . $row['name'] . "' height='50' /></a>";
 
-//         }else{
-//             $tempRow['image'] = 'No Image';
+        }else{
+            $tempRow['image'] = 'No Image';
 
-//         }
-//        $tempRow['operate'] = $operate;
-//         $rows[] = $tempRow;
-//     }
-//     $bulkData['rows'] = $rows;
-//     print_r(json_encode($bulkData));
-// }
-// if (isset($_GET['table']) && $_GET['table'] == 'services') {
+        }
+        if ($row['status'] == 0)
+            $tempRow['status'] = "<p class='text text-info'>Booked</p>";
+        else if($row['status'] == 1)
+            $tempRow['status'] = "<p class='text text-success'>Confirmed</p>";
+        else
+            $tempRow['status'] = "<p class='text text-danger'>Completed</p>";
+         $tempRow['operate'] = $operate;
+        $rows[] = $tempRow;
+    }
+    $bulkData['rows'] = $rows;
+    print_r(json_encode($bulkData));
+}
+if (isset($_GET['table']) && $_GET['table'] == 'appointments') {
 
-//     $offset = 0;
-//     $limit = 10;
-//     $sort = 'id';
-//     $order = 'DESC';
-//     $where = '';
-//     if (isset($_GET['offset']))
-//         $offset = $db->escapeString($fn->xss_clean($_GET['offset']));
-//     if (isset($_GET['limit']))
-//         $limit = $db->escapeString($fn->xss_clean($_GET['limit']));
+    $offset = 0;
+    $limit = 10;
+    $sort = 'id';
+    $order = 'DESC';
+    $where = '';
+    if (isset($_GET['offset']))
+        $offset = $db->escapeString($fn->xss_clean($_GET['offset']));
+    if (isset($_GET['limit']))
+        $limit = $db->escapeString($fn->xss_clean($_GET['limit']));
 
-//     if (isset($_GET['sort']))
-//         $sort = $db->escapeString($fn->xss_clean($_GET['sort']));
-//     if (isset($_GET['order']))
-//         $order = $db->escapeString($fn->xss_clean($_GET['order']));
+    if (isset($_GET['sort']))
+        $sort = $db->escapeString($fn->xss_clean($_GET['sort']));
+    if (isset($_GET['order']))
+        $order = $db->escapeString($fn->xss_clean($_GET['order']));
 
-//     if (isset($_GET['search']) && !empty($_GET['search'])) {
-//         $search = $db->escapeString($fn->xss_clean($_GET['search']));
-//         $where .= "WHERE service_type like '%" . $search . "%' OR category like '%" . $search . "%'OR bike_name like '%" . $search . "%'";
-//     }
-//     if (isset($_GET['sort'])){
-//         $sort = $db->escapeString($_GET['sort']);
+    if (isset($_GET['search']) && !empty($_GET['search'])) {
+        $search = $db->escapeString($fn->xss_clean($_GET['search']));
+        $where .= "WHERE name like '%" . $search . "%' OR doctor_id like '%" . $search . "%'OR mobile like '%" . $search . "%'OR location like '%" . $search . "%'";
+    }
+    if (isset($_GET['sort'])){
+        $sort = $db->escapeString($_GET['sort']);
 
-//     }
-//     if (isset($_GET['order'])){
-//         $order = $db->escapeString($_GET['order']);
+    }
+    if (isset($_GET['order'])){
+        $order = $db->escapeString($_GET['order']);
 
-//     }
-//     $sql = "SELECT COUNT(`id`) as total FROM `services` ";
-//     $db->sql($sql);
-//     $res = $db->getResult();
-//     foreach ($res as $row)
-//         $total = $row['total'];
+    }
+    $sql = "SELECT COUNT(`id`) as total FROM `appointments` ";
+    $db->sql($sql);
+    $res = $db->getResult();
+    foreach ($res as $row)
+        $total = $row['total'];
 
-//     $sql = "SELECT * FROM `services` ". $where ." ORDER BY " . $sort . " " . $order . " LIMIT " . $offset . "," . $limit;
-//     $db->sql($sql);
-//     $res = $db->getResult();
+    $sql = "SELECT * FROM `appointments` ". $where ." ORDER BY " . $sort . " " . $order . " LIMIT " . $offset . "," . $limit;
+    $db->sql($sql);
+    $res = $db->getResult();
 
         
-//     $bulkData = array();
-//     $bulkData['total'] = $total;
+    $bulkData = array();
+    $bulkData['total'] = $total;
     
-//     $rows = array();
-//     $tempRow = array();
+    $rows = array();
+    $tempRow = array();
 
-//     foreach ($res as $row) {
+    foreach ($res as $row) {
 
 
-//         $tempRow['id'] = $row['id'];
-//         $tempRow['bike_name'] = $row['name'];
-//         $tempRow['model'] = $row['model'];
-//         $tempRow['mobile'] = $row['mobile'];
-//         $tempRow['service_type'] = $row['service_type'];
-//     $tempRow['category'] = $row['category'];
-//         $rows[] = $tempRow;
-//     }
-//     $bulkData['rows'] = $rows;
-//     print_r(json_encode($bulkData));
-// }
-// if (isset($_GET['table']) && $_GET['table'] == 'rental') {
+        $tempRow['id'] = $row['id'];
+        $tempRow['doctor_id'] = $row['doctor_id'];
+        $tempRow['name'] = $row['name'];
+        $tempRow['mobile'] = $row['mobile'];
+        $tempRow['age'] = $row['age'];
+        $tempRow['disease'] = $row['disease'];
+        $tempRow['place'] = $row['place'];
+        $tempRow['description'] = $row['description'];
+        $rows[] = $tempRow;
+    }
+    $bulkData['rows'] = $rows;
+    print_r(json_encode($bulkData));
+}
+if (isset($_GET['table']) && $_GET['table'] == 'doctors') {
 
-//     $offset = 0;
-//     $limit = 10;
-//     $sort = 'id';
-//     $order = 'DESC';
-//     $where = '';
-//     if (isset($_GET['offset']))
-//         $offset = $db->escapeString($fn->xss_clean($_GET['offset']));
-//     if (isset($_GET['limit']))
-//         $limit = $db->escapeString($fn->xss_clean($_GET['limit']));
+    $offset = 0;
+    $limit = 10;
+    $sort = 'id';
+    $order = 'DESC';
+    $where = '';
+    if (isset($_GET['offset']))
+        $offset = $db->escapeString($fn->xss_clean($_GET['offset']));
+    if (isset($_GET['limit']))
+        $limit = $db->escapeString($fn->xss_clean($_GET['limit']));
 
-//     if (isset($_GET['sort']))
-//         $sort = $db->escapeString($fn->xss_clean($_GET['sort']));
-//     if (isset($_GET['order']))
-//         $order = $db->escapeString($fn->xss_clean($_GET['order']));
+    if (isset($_GET['sort']))
+        $sort = $db->escapeString($fn->xss_clean($_GET['sort']));
+    if (isset($_GET['order']))
+        $order = $db->escapeString($fn->xss_clean($_GET['order']));
 
-//     if (isset($_GET['search']) && !empty($_GET['search'])) {
-//         $search = $db->escapeString($fn->xss_clean($_GET['search']));
-//         $where .= "WHERE vehicle_no like '%" . $search . "%' OR model like '%" . $search . "%'OR vehicle_group like '%" . $search . "%'";
-//     }
-//     if (isset($_GET['sort'])){
-//         $sort = $db->escapeString($_GET['sort']);
+    if (isset($_GET['search']) && !empty($_GET['search'])) {
+        $search = $db->escapeString($fn->xss_clean($_GET['search']));
+        $where .= "WHERE name like '%" . $search . "%' OR role like '%" . $search . "%' OR fees like '%" . $search . "%'";
+    }
+    if (isset($_GET['sort'])){
+        $sort = $db->escapeString($_GET['sort']);
 
-//     }
-//     if (isset($_GET['order'])){
-//         $order = $db->escapeString($_GET['order']);
+    }
+    if (isset($_GET['order'])){
+        $order = $db->escapeString($_GET['order']);
 
-//     }
-//     $sql = "SELECT COUNT(`id`) as total FROM `rental` ";
-//     $db->sql($sql);
-//     $res = $db->getResult();
-//     foreach ($res as $row)
-//         $total = $row['total'];
+    }
+    $sql = "SELECT COUNT(`id`) as total FROM `doctors` ";
+    $db->sql($sql);
+    $res = $db->getResult();
+    foreach ($res as $row)
+        $total = $row['total'];
 
-//     $sql = "SELECT * FROM `rental` ". $where ." ORDER BY " . $sort . " " . $order . " LIMIT " . $offset . "," . $limit;
-//     $db->sql($sql);
-//     $res = $db->getResult();
+    $sql = "SELECT * FROM `doctors` ". $where ." ORDER BY " . $sort . " " . $order . " LIMIT " . $offset . "," . $limit;
+    $db->sql($sql);
+    $res = $db->getResult();
 
         
-//     $bulkData = array();
-//     $bulkData['total'] = $total;
+    $bulkData = array();
+    $bulkData['total'] = $total;
     
-//     $rows = array();
-//     $tempRow = array();
+    $rows = array();
+    $tempRow = array();
 
-//     foreach ($res as $row) {
+    foreach ($res as $row) {
 
+        $operate = ' <a href="edit-doctor.php?id=' . $row['id'] . '"><i class="fa fa-edit"></i>Edit</a>';
+        $tempRow['id'] = $row['id'];
+        $tempRow['name'] = $row['name'];
+        $tempRow['role'] = $row['role'];
+        $tempRow['experience'] = $row['experience'];
+        $tempRow['fees'] = $row['fees'];
+        if(!empty($row['image'])){
+            $tempRow['image'] = "<a data-lightbox='category' href='" . $row['image'] . "' data-caption='" . $row['name'] . "'><img src='" . $row['image'] . "' title='" . $row['name'] . "' height='50' /></a>";
 
-//         $tempRow['id'] = $row['id'];
-//         $tempRow['vehicle_no'] = $row['vehicle_no'];
-//         $tempRow['vehicle_group'] = $row['vehicle_group'];
-//         $tempRow['model'] = $row['model'];
-//         $tempRow['year_of_manufacture'] = $row['year_of_manufacture'];
-//         $rows[] = $tempRow;
-//     }
-//     $bulkData['rows'] = $rows;
-//     print_r(json_encode($bulkData));
-// }
+        }else{
+            $tempRow['image'] = 'No Image';
+
+        }
+        $tempRow['operate'] = $operate;
+        $rows[] = $tempRow;
+    }
+    $bulkData['rows'] = $rows;
+    print_r(json_encode($bulkData));
+}
 // if (isset($_GET['table']) && $_GET['table'] == 'notifications') {
 //     $offset = 0;
 //     $limit = 10;
@@ -543,68 +613,6 @@ if (isset($_GET['table']) && $_GET['table'] == 'products') {
 // $bulkData['rows'] = $rows;
 // print_r(json_encode($bulkData));
 // }
-// if (isset($_GET['table']) && $_GET['table'] == 'showroom') {
 
-//     $offset = 0;
-//     $limit = 10;
-//     $sort = 'id';
-//     $order = 'DESC';
-//     $where = '';
-//     if (isset($_GET['offset']))
-//         $offset = $db->escapeString($fn->xss_clean($_GET['offset']));
-//     if (isset($_GET['limit']))
-//         $limit = $db->escapeString($fn->xss_clean($_GET['limit']));
-
-//     if (isset($_GET['sort']))
-//         $sort = $db->escapeString($fn->xss_clean($_GET['sort']));
-//     if (isset($_GET['order']))
-//         $order = $db->escapeString($fn->xss_clean($_GET['order']));
-
-//     if (isset($_GET['search']) && !empty($_GET['search'])) {
-//         $search = $db->escapeString($fn->xss_clean($_GET['search']));
-//         $where .= "WHERE showroom_name like '%" . $search . "%' OR brand like '%" . $search . "%'OR pincode like '%" . $search . "%'";
-//     }
-//     if (isset($_GET['sort'])){
-//         $sort = $db->escapeString($_GET['sort']);
-
-//     }
-//     if (isset($_GET['order'])){
-//         $order = $db->escapeString($_GET['order']);
-
-//     }
-//     $sql = "SELECT COUNT(`id`) as total FROM `showroom` ";
-//     $db->sql($sql);
-//     $res = $db->getResult();
-//     foreach ($res as $row)
-//         $total = $row['total'];
-
-//     $sql = "SELECT * FROM `showroom` ". $where ." ORDER BY " . $sort . " " . $order . " LIMIT " . $offset . "," . $limit;
-//     $db->sql($sql);
-//     $res = $db->getResult();
-
-        
-//     $bulkData = array();
-//     $bulkData['total'] = $total;
-    
-//     $rows = array();
-//     $tempRow = array();
-
-//     foreach ($res as $row) {
-
-//         $operate= '<a href="edit-showroom.php?id=' . $row['id'] . '" ><i class="fa fa-edit" ></i>Edit</a>';
-//         $operate .= '<a href="view-showroom.php?id=' . $row['id'] . '" class="btn btn-primary btn-xs" style="margin-left:5px;!important">View</a>';
-//         $tempRow['id'] = $row['id'];
-//         $tempRow['showroom_name'] = $row['showroom_name'];
-//         $tempRow['mobile'] = $row['mobile'];
-//         $tempRow['brand'] = $row['brand'];
-//         $tempRow['working_hours'] = $row['working_hours'];
-//         $tempRow['address'] = $row['address'];
-//         $tempRow['pincode'] = $row['pincode'];
-//         $tempRow['operate'] = $operate;
-//         $rows[] = $tempRow;
-//     }
-//     $bulkData['rows'] = $rows;
-//     print_r(json_encode($bulkData));
-// }
 
 $db->disconnect();
