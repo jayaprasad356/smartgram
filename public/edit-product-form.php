@@ -122,7 +122,7 @@ if (isset($_POST['btnCancel'])) { ?>
 						   <div class="row">
 							    <div class="form-group">
 									<div class='col-md-4'>
-									          <label for="exampleInputEmail1">Model</label> <i class="text-danger asterik">*</i>
+									          <label for="exampleInputEmail1">Category</label> <i class="text-danger asterik">*</i>
 												<select id='category' name="category" class='form-control' required>
                                                 <option value="none">Select</option>
                                                             <?php
@@ -138,11 +138,11 @@ if (isset($_POST['btnCancel'])) { ?>
                                                 </select>
 									</div>
 									 <div class="col-md-4">
-										<label for="exampleInputEmail1">Product Name</label><?php echo isset($error['product_name']) ? $error['product_name'] : ''; ?>
+										<label for="exampleInputEmail1">Product Name</label><i class="text-danger asterik">*</i><?php echo isset($error['product_name']) ? $error['product_name'] : ''; ?>
 										<input type="text" class="form-control" name="product_name" value="<?php echo $res[0]['product_name']; ?>">
 									 </div>
 									 <div class="col-md-4">
-										<label for="exampleInputEmail1">Brand</label><?php echo isset($error['brand']) ? $error['brand'] : ''; ?>
+										<label for="exampleInputEmail1">Brand</label><i class="text-danger asterik">*</i><?php echo isset($error['brand']) ? $error['brand'] : ''; ?>
 										<input type="text" class="form-control" name="brand" value="<?php echo $res[0]['brand']; ?>">
 									 </div>
 								</div>
@@ -151,11 +151,11 @@ if (isset($_POST['btnCancel'])) { ?>
 						   <div class="row">
 							    <div class="form-group">
 									 <div class="col-md-4">
-										<label for="exampleInputEmail1">Description</label><?php echo isset($error['description']) ? $error['description'] : ''; ?>
+										<label for="exampleInputEmail1">Description</label><i class="text-danger asterik">*</i><?php echo isset($error['description']) ? $error['description'] : ''; ?>
 										<input type="text" class="form-control" name="description" value="<?php echo $res[0]['description']; ?>">
 									 </div>
 									 <div class="col-md-4">
-									     <label for="exampleInputFile">Image</label>
+									     <label for="exampleInputFile">Image</label><i class="text-danger asterik">*</i>
                                         
                                         <input type="file" accept="image/png,  image/jpeg" onchange="readURL(this);"  name="image" id="image">
                                         <p class="help-block"><img id="blah" src="<?php echo $res[0]['image']; ?>" style="height:100px;max-width:100%" /></p>
