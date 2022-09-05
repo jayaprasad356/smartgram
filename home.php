@@ -43,8 +43,8 @@ include "header.php";
         </section>
         <section class="content">
             <div class="row">
-                <div class="col-lg-3 col-xs-6">
-                    <div class="small-box bg-yellow">
+                <div class="col-lg-4 col-xs-6">
+                    <div class="small-box bg-blue">
                         <div class="inner">
                         <h3><?php
                             $sql = "SELECT * FROM categories";
@@ -59,7 +59,7 @@ include "header.php";
                         <a href="categories.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
-                <div class="col-lg-3 col-xs-6">
+                <div class="col-lg-4 col-xs-6">
                     <div class="small-box bg-green">
                         <div class="inner">
                         <h3><?php
@@ -75,7 +75,72 @@ include "header.php";
                         <a href="products.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
+                <div class="col-lg-4 col-xs-6">
+                    <div class="small-box bg-red">
+                        <div class="inner">
+                        <h3><?php
+                            $sql = "SELECT * FROM users";
+                            $db->sql($sql);
+                            $res = $db->getResult();
+                            $num = $db->numRows($res);
+                            echo $num;
+                             ?></h3>
+                            <p>Users</p>
+                        </div>
+                        <div class="icon"><i class="fa fa-user"></i></div>
+                        <a href="users.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-xs-6">
+                    <div class="small-box bg-orange">
+                        <div class="inner">
+                        <h3><?php
+                            $sql = "SELECT * FROM orders";
+                            $db->sql($sql);
+                            $res = $db->getResult();
+                            $num = $db->numRows($res);
+                            echo $num;
+                             ?></h3>
+                            <p>Orders</p>
+                        </div>
+                        <div class="icon"><i class="fa fa-shopping-cart"></i></div>
+                        <a href="orders.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-xs-6">
+                    <div class="small-box bg-yellow">
+                        <div class="inner">
+                        <h3><?php
+                            $sql = "SELECT * FROM doctors";
+                            $db->sql($sql);
+                            $res = $db->getResult();
+                            $num = $db->numRows($res);
+                            echo $num;
+                             ?></h3>
+                            <p>Doctors</p>
+                        </div>
+                        <div class="icon"><i class="fa fa-users"></i></div>
+                        <a href="doctors.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-xs-6">
+                    <div class="small-box bg-light-blue">
+                        <div class="inner">
+                        <h3><?php
+                            $sql = "SELECT * FROM appointments";
+                            $db->sql($sql);
+                            $res = $db->getResult();
+                            $num = $db->numRows($res);
+                            echo $num;
+                             ?></h3>
+                            <p>Appointments</p>
+                        </div>
+                        <div class="icon"><i class="fa fa-calendar"></i></div>
+                        <a href="appointments.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
             </div>
+
         </section>
     </div>
     <?php include "footer.php"; ?>

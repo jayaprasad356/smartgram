@@ -190,13 +190,13 @@ $fn = new custom_functions;
                 </li>
                 <li class="treeview">
                     <a href="doctors.php">
-                        <i class="fa fa-bullseye"></i>
+                        <i class="fa fa-users"></i>
                         <span>Doctors</span>
                     </a>
                 </li>
                 <li class="treeview">
                     <a href="appointments.php">
-                        <i class="fa fa-bullseye"></i>
+                        <i class="fa fa-calendar"></i>
                         <span>Appointments</span>
                     </a>
                 </li>
@@ -204,6 +204,12 @@ $fn = new custom_functions;
                     <a href="orders.php">
                         <i class="fa fa-shopping-cart"></i>
                         <span>Orders</span>
+                    </a>
+                </li>
+                <li class="treeview">
+                    <a href="notifications.php">
+                        <i class="fa fa-bell"></i>
+                        <span>Notifications</span>
                     </a>
                 </li>
             </ul>
