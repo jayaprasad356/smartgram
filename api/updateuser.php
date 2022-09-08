@@ -13,21 +13,16 @@ include_once('../includes/crud.php');
 $db = new Database();
 $db->connect();
 
+
+if (empty($_POST['user_id'])) {
+    $response['success'] = false;
+    $response['message'] = "User Id is Empty";
+    print_r(json_encode($response));
+    return false;
+}
 if (empty($_POST['name'])) {
     $response['success'] = false;
     $response['message'] = "Name is Empty";
-    print_r(json_encode($response));
-    return false;
-}
-if (empty($_POST['mobile'])) {
-    $response['success'] = false;
-    $response['message'] = "Mobilenumber is Empty";
-    print_r(json_encode($response));
-    return false;
-}
-if (empty($_POST['password'])) {
-    $response['success'] = false;
-    $response['message'] = "Password is Empty";
     print_r(json_encode($response));
     return false;
 }
@@ -73,9 +68,8 @@ if (empty($_POST['district'])) {
     print_r(json_encode($response));
     return false;
 }
+$user_id = $db->escapeString($_POST['user_id']);
 $name = $db->escapeString($_POST['name']);
-$mobile = $db->escapeString($_POST['mobile']);
-$password = $db->escapeString($_POST['password']);
 $occupation = $db->escapeString($_POST['occupation']);
 $gender = $db->escapeString($_POST['gender']);
 $email = $db->escapeString($_POST['email']);
@@ -84,27 +78,28 @@ $village = $db->escapeString($_POST['village']);
 $pincode = $db->escapeString($_POST['pincode']);
 $district = $db->escapeString($_POST['district']);
 
-$sql = "SELECT * FROM users WHERE mobile = '$mobile' AND password='$password'";
+$sql = "SELECT * FROM users WHERE id=" . $user_id;
 $db->sql($sql);
 $res = $db->getResult();
 $num = $db->numRows($res);
 if ($num == 1) {
-    $response['success'] = false;
-    $response['message'] ="Mobile Number Already Exists";
+    $sql = "UPDATE users SET name='$name',occupation='$occupation',gender='$gender',email='$email',address='$address',village='$village',pincode='$pincode',district='$district' WHERE id=" . $user_id;
+    $db->sql($sql);
+    $sql = "SELECT * FROM users WHERE id=" . $user_id;
+    $db->sql($sql);
+    $res = $db->getResult();
+    $response['success'] = true;
+    $response['message'] = "User Updated Successfully";
+    $response['data'] = $res;
     print_r(json_encode($response));
     return false;
 }
 else{
-    $sql = "INSERT INTO users (`name`,`mobile`,`password`,`occupation`,`gender`,`email`,`address`,`village`,`pincode`,`district`)VALUES('$name','$mobile','$password','$occupation','$gender','$email','$address','$village','$pincode','$district')";
-    $db->sql($sql);
-    $sql = "SELECT * FROM users WHERE mobile = '$mobile' AND password='$password'";
-    $db->sql($sql);
-    $res = $db->getResult();
-    $response['success'] = true;
-    $response['message'] = "Registered Successfully";
-    $response['data'] = $res;
 
+    $response['success'] = false;
+    $response['message'] ="User Not Found";
     print_r(json_encode($response));
+    return false;
 
 }
 
