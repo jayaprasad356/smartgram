@@ -24,33 +24,43 @@ if (empty($_POST['product_id'])) {
     print_r(json_encode($response));
     return false;
 }
+if (empty($_POST['quantity'])) {
+    $response['success'] = false;
+    $response['message'] = "Quantity is Empty";
+    print_r(json_encode($response));
+    return false;
+}
 $user_id = $db->escapeString($_POST['user_id']);
 $product_id = $db->escapeString($_POST['product_id']);
+$quantity = $db->escapeString($_POST['quantity']);
 
-$sql = "SELECT * FROM cart WHERE user_id='$user_id' AND product_id='$product_id'";
+$sql = "SELECT * FROM cart WHERE user_id = '" . $user_id . "' AND product_id = '" . $product_id . "' ";
 $db->sql($sql);
 $res = $db->getResult();
 $num = $db->numRows($res);
 
-if($num==1){
-    $ID = $res[0]['id'];
-    $sql = "UPDATE cart SET user_id='$user_id',product_id='$product_id' WHERE id='$ID'";
+if ($num >= 1) {
+    $id = $res[0]['id'];
+    $data = array(
+        
+        'quantity' => $quantity
+    );
+    $db->update('cart', $data, 'id=' . $id);
+    $response['success'] = true;
+    $response['message'] = "Cart updated successfully";
+    
+    print_r(json_encode($response));
+
+}
+else {
+    $sql = "INSERT INTO cart(`user_id`,`product_id`,`quantity`)VALUES('$user_id','$product_id','$quantity')";
     $db->sql($sql);
     $res = $db->getResult();
     $response['success'] = true;
-    $response['message'] = " Successfully Updated to Cart";
+    $response['message'] = "Successfully Added To Cart";
+    
     print_r(json_encode($response));
+
 }
-else{
-    $sql = "INSERT INTO cart (`user_id`,`product_id`)VALUES('$user_id','$product_id')";
-    $db->sql($sql);
-    $res = $db->getResult();
-    $response['success'] = true;
-    $response['message'] = "Successfully Added to Cart ";
-    print_r(json_encode($response));
-}
-
-
-
 
 ?>

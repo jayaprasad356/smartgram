@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 05, 2022 at 01:13 PM
+-- Generation Time: Sep 09, 2022 at 12:40 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -80,6 +80,7 @@ CREATE TABLE `cart` (
   `id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
+  `quantity` text DEFAULT NULL,
   `date_created` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -87,8 +88,8 @@ CREATE TABLE `cart` (
 -- Dumping data for table `cart`
 --
 
-INSERT INTO `cart` (`id`, `user_id`, `product_id`, `date_created`) VALUES
-(1, 1, 1, '2022-09-05 11:09:47');
+INSERT INTO `cart` (`id`, `user_id`, `product_id`, `quantity`, `date_created`) VALUES
+(1, 1, 1, '3', '2022-09-09 10:22:55');
 
 -- --------------------------------------------------------
 
