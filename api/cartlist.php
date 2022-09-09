@@ -35,6 +35,7 @@ if($num>=1){
         $temp['occupation'] = $row['occupation'];
         $temp['gender'] = $row['gender'];
         $temp['product_name'] = $row['product_name'];
+        $temp['quantity'] = $row['quantity'];
         $temp['brand'] = $row['brand'];
         $temp['description'] = $row['description'];
         $temp['image'] = DOMAIN_URL . $row['image'];
@@ -42,13 +43,13 @@ if($num>=1){
     }
         
     $response['success'] = true;
-    $response['message'] = "Address listed Successfully";
+    $response['message'] = "Cart listed Successfully";
     $response['data'] = $res;
     print_r(json_encode($response));
 }
 else{
     $response['success'] = false;
-    $response['message'] = "Address Not Found";
+    $response['message'] = "Products Not Found in Cart";
     print_r(json_encode($response));
 }
 
