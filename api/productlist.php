@@ -30,6 +30,7 @@ if ($num >= 1) {
         $temp['category_name'] = $row['category_name'];
         $temp['product_name'] = $row['product_name'];
         $temp['brand'] = $row['brand'];
+        $temp['price'] = $row['price'];
         $temp['description'] = $row['description'];
         $temp['image'] = DOMAIN_URL . $row['image'];
         $rows[] = $temp;

@@ -19,21 +19,16 @@ if (empty($_POST['user_id'])) {
     return false;
 }
 $user_id = $db->escapeString($_POST['user_id']);
-
-$sql = "SELECT * FROM cart,users,products WHERE cart.user_id=users.id AND cart.product_id=products.id AND user_id='$user_id'";
+$sql = "SELECT *,cart.id AS id  FROM cart,products WHERE cart.product_id=products.id AND cart.user_id='$user_id'";
 $db->sql($sql);
 $res = $db->getResult();
 $num = $db->numRows($res);
-
 if($num>=1){
-        
+    $sum = 0;
     foreach ($res as $row) {
+        $sum += $row['price'];
         $temp['id'] = $row['id'];
-        $temp['name'] = $row['name'];
-        $temp['mobile'] = $row['mobile'];
-        $temp['email'] = $row['email'];
-        $temp['occupation'] = $row['occupation'];
-        $temp['gender'] = $row['gender'];
+        $temp['price'] = $row['price'];
         $temp['product_name'] = $row['product_name'];
         $temp['quantity'] = $row['quantity'];
         $temp['brand'] = $row['brand'];
@@ -41,10 +36,11 @@ if($num>=1){
         $temp['image'] = DOMAIN_URL . $row['image'];
         $rows[] = $temp;
     }
-        
     $response['success'] = true;
     $response['message'] = "Cart listed Successfully";
-    $response['data'] = $res;
+    $response['total_items'] = $num;
+    $response['total_price'] = $sum;
+    $response['data'] = $rows;
     print_r(json_encode($response));
 }
 else{
