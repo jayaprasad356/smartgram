@@ -35,6 +35,7 @@ if ($num >= 1){
                 $temp['name'] =$row['name'];
                 $temp['product_name'] = $row['product_name'];
                 $temp['brand'] = $row['brand'];
+                $temp['price'] = $row['price'];
                 $temp['address'] = $row['address'];
                 $temp['landmark'] = $row['landmark'];
                 $temp['city'] = $row['city'];

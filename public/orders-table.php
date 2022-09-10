@@ -26,6 +26,7 @@
                                     <th data-field="mobile" data-sortable="true">Mobile</th>
                                     <th data-field="product_name" data-sortable="true">Product Name</th>
                                     <th data-field="brand" data-sortable="true">Brand</th>
+                                    <th data-field="price" data-sortable="true">Price</th>
                                     <th data-field="image">Image</th>
                                     <th data-field="status">Status</th>
                                     <th  data-field="operate" data-events="actionEvents">Action</th>   

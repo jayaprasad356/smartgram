@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 09, 2022 at 12:40 PM
+-- Generation Time: Sep 10, 2022 at 11:07 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -116,6 +116,24 @@ INSERT INTO `categories` (`id`, `name`, `image`, `status`, `last_updated`, `date
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `delivery_charges`
+--
+
+CREATE TABLE `delivery_charges` (
+  `id` int(11) NOT NULL,
+  `delivery_charge` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `delivery_charges`
+--
+
+INSERT INTO `delivery_charges` (`id`, `delivery_charge`) VALUES
+(1, 600);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `doctors`
 --
 
@@ -172,7 +190,7 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`id`, `user_id`, `product_id`, `status`) VALUES
-(1, 1, 1, '0');
+(1, 1, 1, '1');
 
 -- --------------------------------------------------------
 
@@ -185,6 +203,7 @@ CREATE TABLE `products` (
   `category_id` int(11) DEFAULT NULL,
   `product_name` text DEFAULT NULL,
   `brand` text DEFAULT NULL,
+  `price` int(11) DEFAULT NULL,
   `description` text DEFAULT NULL,
   `image` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -193,8 +212,33 @@ CREATE TABLE `products` (
 -- Dumping data for table `products`
 --
 
-INSERT INTO `products` (`id`, `category_id`, `product_name`, `brand`, `description`, `image`) VALUES
-(1, 1, 'Pottasium Fertilizer', 'NPK', 'You can use this material without adding water', 'upload/products/9231-2022-09-02.jpg');
+INSERT INTO `products` (`id`, `category_id`, `product_name`, `brand`, `price`, `description`, `image`) VALUES
+(1, 1, 'Pottassium Fertilizer', 'NPK', 600, 'It is good One product', 'upload/products/2143-2022-09-10.jpg');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `settings`
+--
+
+CREATE TABLE `settings` (
+  `id` int(11) NOT NULL,
+  `name` text DEFAULT NULL,
+  `mobile` text DEFAULT NULL,
+  `email` text DEFAULT NULL,
+  `address` text DEFAULT NULL,
+  `whatsapp` text DEFAULT NULL,
+  `facebook` text DEFAULT NULL,
+  `twitter` text DEFAULT NULL,
+  `instagram` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `settings`
+--
+
+INSERT INTO `settings` (`id`, `name`, `mobile`, `email`, `address`, `whatsapp`, `facebook`, `twitter`, `instagram`) VALUES
+(1, 'Admin', '9875689939', 'admin344@gmail.com', 'Tamilnadu,India', 'https;//whatsapp.com', 'https://admin.facebook.com', 'admin454@twitter.com', 'https://admin123.instagram.in');
 
 -- --------------------------------------------------------
 
@@ -270,6 +314,12 @@ ALTER TABLE `categories`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `delivery_charges`
+--
+ALTER TABLE `delivery_charges`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `doctors`
 --
 ALTER TABLE `doctors`
@@ -291,6 +341,12 @@ ALTER TABLE `orders`
 -- Indexes for table `products`
 --
 ALTER TABLE `products`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `settings`
+--
+ALTER TABLE `settings`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -334,6 +390,12 @@ ALTER TABLE `categories`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT for table `delivery_charges`
+--
+ALTER TABLE `delivery_charges`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `doctors`
 --
 ALTER TABLE `doctors`
@@ -355,6 +417,12 @@ ALTER TABLE `orders`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `settings`
+--
+ALTER TABLE `settings`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --

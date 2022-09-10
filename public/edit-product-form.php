@@ -13,14 +13,12 @@ if (isset($_GET['id'])) {
     return false;
     exit(0);
 }
-$sql = "SELECT * FROM `models`";
-$db->sql($sql);
-$model_res = $db->getResult();
 if (isset($_POST['btnEdit'])) {
 
 	    $category = $db->escapeString(($_POST['category']));
 	    $product_name = $db->escapeString($_POST['product_name']);
         $brand = $db->escapeString($_POST['brand']);
+		$price = $db->escapeString($_POST['price']);
         $description = $db->escapeString($_POST['description']);
 		$error = array();
 
@@ -33,13 +31,16 @@ if (isset($_POST['btnEdit'])) {
         if (empty($brand)) {
             $error['brand'] = " <span class='label label-danger'>Required!</span>";
         }
+		if (empty($price)) {
+            $error['price'] = " <span class='label label-danger'>Required!</span>";
+        }
         if (empty($description)) {
             $error['description'] = " <span class='label label-danger'>Required!</span>";
         }
 
 		
 
-		if ( !empty($category) && !empty($product_name) && !empty($brand) && !empty($description)) 
+		if ( !empty($category) && !empty($product_name) && !empty($brand) && !empty($price) && !empty($description)) 
 		{
 			if ($_FILES['image']['size'] != 0 && $_FILES['image']['error'] == 0 && !empty($_FILES['image'])) {
 				//image isn't empty and update the image
@@ -64,7 +65,7 @@ if (isset($_POST['btnEdit'])) {
 				$db->sql($sql);
 			}
 			
-             $sql_query = "UPDATE products SET category_id='$category',product_name='$product_name',brand='$brand',description='$description' WHERE id =  $ID";
+             $sql_query = "UPDATE products SET category_id='$category',product_name='$product_name',brand='$brand',price='$price',description='$description' WHERE id =  $ID";
 			 $db->sql($sql_query);
 			 $res = $db->getResult();
              $update_result = $db->getResult();
@@ -141,10 +142,20 @@ if (isset($_POST['btnCancel'])) { ?>
 										<label for="exampleInputEmail1">Product Name</label><i class="text-danger asterik">*</i><?php echo isset($error['product_name']) ? $error['product_name'] : ''; ?>
 										<input type="text" class="form-control" name="product_name" value="<?php echo $res[0]['product_name']; ?>">
 									 </div>
-									 <div class="col-md-4">
+								</div>
+						   </div>
+						   <hr>
+						   <div class="row">
+								<div class="form-group">
+								    <div class="col-md-4">
 										<label for="exampleInputEmail1">Brand</label><i class="text-danger asterik">*</i><?php echo isset($error['brand']) ? $error['brand'] : ''; ?>
 										<input type="text" class="form-control" name="brand" value="<?php echo $res[0]['brand']; ?>">
 									 </div>
+									 <div class="col-md-4">
+										<label for="exampleInputEmail1">Price</label><i class="text-danger asterik">*</i><?php echo isset($error['price']) ? $error['price'] : ''; ?>
+										<input type="text" class="form-control" name="price" value="<?php echo $res[0]['price']; ?>">
+									 </div>
+									
 								</div>
 						   </div>
 						   <hr>

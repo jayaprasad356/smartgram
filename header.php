@@ -212,6 +212,17 @@ $fn = new custom_functions;
                         <span>Notifications</span>
                     </a>
                 </li>
+                <li class="treeview">
+                    <a href="deliverycharges.php">
+                          <i class="fa fa-money"></i>           
+                          <span>Delivery Charges</span>
+                    </a>
+                </li>
+                <li class="treeview">
+                    <a href="settings.php">
+                        <i class="fa fa-gear"></i><span>Settings</span>  
+                    </a>
+                </li>
             </ul>
             </section>
             <!-- /.sidebar -->

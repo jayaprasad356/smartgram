@@ -274,6 +274,7 @@ if (isset($_GET['table']) && $_GET['table'] == 'products') {
         $tempRow['category_id'] = $row['category_id'];
         $tempRow['product_name'] = $row['product_name'];
         $tempRow['brand'] = $row['brand'];
+        $tempRow['price'] = $row['price'];
         $tempRow['description'] = $row['description'];
         if(!empty($row['image'])){
             $tempRow['image'] = "<a data-lightbox='category' href='" . $row['image'] . "' data-caption='" . $row['image'] . "'><img src='" . $row['image'] . "' title='" . $row['image'] . "' height='50' /></a>";
@@ -411,6 +412,7 @@ if (isset($_GET['table']) && $_GET['table'] == 'orders') {
         $tempRow['mobile'] = $row['mobile'];
         $tempRow['product_name'] = $row['product_name'];
         $tempRow['brand'] = $row['brand'];
+        $tempRow['price'] = $row['price'];
         if(!empty($row['image'])){
             $tempRow['image'] = "<a data-lightbox='category' href='" . $row['image'] . "' data-caption='" . $row['name'] . "'><img src='" . $row['image'] . "' title='" . $row['name'] . "' height='50' /></a>";
 
