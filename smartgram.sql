@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 10, 2022 at 11:07 AM
--- Server version: 10.4.24-MariaDB
--- PHP Version: 7.4.29
+-- Generation Time: Sep 12, 2022 at 08:03 AM
+-- Server version: 10.4.22-MariaDB
+-- PHP Version: 7.4.27
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -54,12 +54,14 @@ INSERT INTO `addresses` (`id`, `user_id`, `address`, `landmark`, `city`, `distri
 
 CREATE TABLE `appointments` (
   `id` int(11) NOT NULL,
+  `user_id` int(11) DEFAULT NULL,
   `doctor_id` int(11) DEFAULT NULL,
   `name` text DEFAULT NULL,
   `mobile` text DEFAULT NULL,
   `age` text DEFAULT NULL,
   `disease` text DEFAULT NULL,
   `place` text DEFAULT NULL,
+  `history` text DEFAULT NULL,
   `description` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -67,8 +69,9 @@ CREATE TABLE `appointments` (
 -- Dumping data for table `appointments`
 --
 
-INSERT INTO `appointments` (`id`, `doctor_id`, `name`, `mobile`, `age`, `disease`, `place`, `description`) VALUES
-(1, 1, 'kerant', '8847474844', '45', 'Bacterial Disease', 'Trichy', 'last one weeks i am injured by this');
+INSERT INTO `appointments` (`id`, `user_id`, `doctor_id`, `name`, `mobile`, `age`, `disease`, `place`, `history`, `description`) VALUES
+(1, NULL, 1, 'kerant', '8847474844', '45', 'Bacterial Disease', 'Trichy', NULL, 'last one weeks i am injured by this'),
+(2, 5, 1, 'prasad', NULL, '25', 'sugar', 'sholapuram', 'nothing', 'prasad am patient');
 
 -- --------------------------------------------------------
 
@@ -80,7 +83,7 @@ CREATE TABLE `cart` (
   `id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
-  `quantity` text DEFAULT NULL,
+  `quantity` int(11) DEFAULT NULL,
   `date_created` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -89,7 +92,7 @@ CREATE TABLE `cart` (
 --
 
 INSERT INTO `cart` (`id`, `user_id`, `product_id`, `quantity`, `date_created`) VALUES
-(1, 1, 1, '3', '2022-09-09 10:22:55');
+(1, 1, 1, 3, '2022-09-09 10:22:55');
 
 -- --------------------------------------------------------
 
@@ -111,7 +114,9 @@ CREATE TABLE `categories` (
 --
 
 INSERT INTO `categories` (`id`, `name`, `image`, `status`, `last_updated`, `date_created`) VALUES
-(1, 'solid Fertilizers', 'upload/images/6545-2022-09-02.jpg', 1, '2022-09-02 04:40:08', '2022-09-02 04:36:07');
+(1, 'solid Fertilizers', 'upload/images/6545-2022-09-02.jpg', 1, '2022-09-02 04:40:08', '2022-09-02 04:36:07'),
+(2, 'Liquid', 'upload/images/4735-2022-09-09.', 0, NULL, '2022-09-09 07:27:24'),
+(3, 'Liquid', 'upload/images/9572-2022-09-09.jpg', 0, NULL, '2022-09-09 07:28:57');
 
 -- --------------------------------------------------------
 
@@ -129,7 +134,7 @@ CREATE TABLE `delivery_charges` (
 --
 
 INSERT INTO `delivery_charges` (`id`, `delivery_charge`) VALUES
-(1, 600);
+(1, 60);
 
 -- --------------------------------------------------------
 
@@ -142,7 +147,7 @@ CREATE TABLE `doctors` (
   `name` text DEFAULT NULL,
   `role` text DEFAULT NULL,
   `experience` text DEFAULT NULL,
-  `fees` text DEFAULT NULL,
+  `fees` int(11) DEFAULT NULL,
   `image` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -151,7 +156,7 @@ CREATE TABLE `doctors` (
 --
 
 INSERT INTO `doctors` (`id`, `name`, `role`, `experience`, `fees`, `image`) VALUES
-(1, 'James', 'Veterinary doctor', '4 Years', 'Rs.450', 'upload/doctors/1662113175.0499.jpg');
+(1, 'James', 'Veterinary doctor', '4 Years', 0, 'upload/doctors/1662113175.0499.jpg');
 
 -- --------------------------------------------------------
 
@@ -182,6 +187,13 @@ CREATE TABLE `orders` (
   `id` int(11) NOT NULL,
   `user_id` int(11) DEFAULT NULL,
   `product_id` int(11) DEFAULT NULL,
+  `method` varchar(255) DEFAULT NULL,
+  `total` int(11) DEFAULT NULL,
+  `quantity` int(11) DEFAULT NULL,
+  `address` text DEFAULT NULL,
+  `mobile` varchar(255) DEFAULT NULL,
+  `delivery_charges` int(11) DEFAULT NULL,
+  `order_date` varchar(255) DEFAULT NULL,
   `status` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -189,8 +201,10 @@ CREATE TABLE `orders` (
 -- Dumping data for table `orders`
 --
 
-INSERT INTO `orders` (`id`, `user_id`, `product_id`, `status`) VALUES
-(1, 1, 1, '1');
+INSERT INTO `orders` (`id`, `user_id`, `product_id`, `method`, `total`, `quantity`, `address`, `mobile`, `delivery_charges`, `order_date`, `status`) VALUES
+(6, 5, 1, 'UPI', 2000, 3, '50', '9898989898', 50, '01-11-2000', 'Ordered'),
+(7, 5, 1, 'Wallet', 2000, 1, '50', '9898989898', 50, '2022-09-11', 'Ordered'),
+(8, 5, 1, 'Wallet', 2000, 1, '50', '9898989898', 50, '2022-09-11', 'Ordered');
 
 -- --------------------------------------------------------
 
@@ -202,8 +216,8 @@ CREATE TABLE `products` (
   `id` int(11) NOT NULL,
   `category_id` int(11) DEFAULT NULL,
   `product_name` text DEFAULT NULL,
-  `brand` text DEFAULT NULL,
   `price` int(11) DEFAULT NULL,
+  `brand` text DEFAULT NULL,
   `description` text DEFAULT NULL,
   `image` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -212,8 +226,8 @@ CREATE TABLE `products` (
 -- Dumping data for table `products`
 --
 
-INSERT INTO `products` (`id`, `category_id`, `product_name`, `brand`, `price`, `description`, `image`) VALUES
-(1, 1, 'Pottassium Fertilizer', 'NPK', 600, 'It is good One product', 'upload/products/2143-2022-09-10.jpg');
+INSERT INTO `products` (`id`, `category_id`, `product_name`, `price`, `brand`, `description`, `image`) VALUES
+(1, 1, 'Pottasium Fertilizer', 2000, 'NPK', 'You can use this material without adding water', 'upload/products/9231-2022-09-02.jpg');
 
 -- --------------------------------------------------------
 
@@ -271,19 +285,56 @@ CREATE TABLE `users` (
   `name` text DEFAULT NULL,
   `mobile` text DEFAULT NULL,
   `password` text DEFAULT NULL,
-  `confirm_password` text DEFAULT NULL,
   `occupation` text DEFAULT NULL,
   `gender` text DEFAULT NULL,
-  `email` text DEFAULT NULL
+  `email` text DEFAULT NULL,
+  `address` text DEFAULT NULL,
+  `village` varchar(255) DEFAULT NULL,
+  `pincode` varchar(255) DEFAULT NULL,
+  `district` varchar(255) DEFAULT NULL,
+  `balance` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `mobile`, `password`, `confirm_password`, `occupation`, `gender`, `email`) VALUES
-(1, 'Nehan', '9876543210', '1234', '1234', 'Farmer', 'Male', 'sridahar12@gmail.com'),
-(2, 'Sanjay', '6544678899', 'sanjay123', 'sanjay123', 'Farmer', 'Male', 'sanjay123@gmail.com');
+INSERT INTO `users` (`id`, `name`, `mobile`, `password`, `occupation`, `gender`, `email`, `address`, `village`, `pincode`, `district`, `balance`) VALUES
+(1, 'Nehan', '9876543210', '1234', 'Farmer', 'Male', 'sridahar12@gmail.com', NULL, NULL, NULL, NULL, 0),
+(2, 'Sanjay', '6544678899', 'sanjay123', 'Farmer', 'Male', 'sanjay123@gmail.com', NULL, NULL, NULL, NULL, 0),
+(3, 'Sanjay', '6555678899', 'sanjay123', 'Farmer', 'Male', 'sanjay123@gmail.com', 'ewew', 'ewew', 'dswewe', NULL, 0),
+(4, 'Sanjay', '6995678899', 'sanjay123', 'Farmer', 'Male', 'sanjay123@gmail.com', 'ewew', 'ewew', 'dswewe', 'dsds', 0),
+(5, 'prasad jp', '9898989898', '12345', 'Farmer', 'Male', 'jayaprasad356@gmail.com', 'ghahs', 'jaja', '613279', 'hsbsbs', 650),
+(6, 'huhhh', '9999999999', 'sweswe', 'Business', 'Female', 'jayaprasad.s@care.ac.in', 'fgg', 'hhh', 'gy', 'vh', 0),
+(7, 'harsh Vardhan', '9717723876', 'Harsh@3434', 'Farmer', 'Male', 'Vardhan1109@gmail.com', 'H.n 343 balu Pura', 'gha', '201001', 'Ghaziabad', 0),
+(8, 'Deepak Sharma', '9254447828', 'Dabbu@15', 'Others', 'Male', 'deepaksharma015@gmail.com', 'Narnaul', 'Narnaul', '123001', 'Mahendergarh', 0),
+(9, 'prabal pratap singh', '9716332976', '781974', 'Others', 'Male', 'hiprabal@gmail.com', '232/30 E, new kot gaon, G T road', 'new kot gaon', '201001', 'ghaziabad', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `wallet_transactions`
+--
+
+CREATE TABLE `wallet_transactions` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `date` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `amount` int(11) DEFAULT NULL,
+  `type` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `wallet_transactions`
+--
+
+INSERT INTO `wallet_transactions` (`id`, `user_id`, `date`, `amount`, `type`) VALUES
+(1, 5, '2022-09-11', 100, 'credit'),
+(2, 5, '2022-09-11', 500, 'debit'),
+(3, 5, '2022-09-11', 100, 'credit'),
+(4, 5, '2022-09-11', 500, 'credit'),
+(5, 5, '2022-09-11', 100, 'credit'),
+(6, 5, '2022-09-11', 2000, 'credit');
 
 --
 -- Indexes for dumped tables
@@ -362,6 +413,12 @@ ALTER TABLE `users`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `wallet_transactions`
+--
+ALTER TABLE `wallet_transactions`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -375,19 +432,19 @@ ALTER TABLE `addresses`
 -- AUTO_INCREMENT for table `appointments`
 --
 ALTER TABLE `appointments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `delivery_charges`
@@ -411,7 +468,7 @@ ALTER TABLE `notifications`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `products`
@@ -435,7 +492,13 @@ ALTER TABLE `slides`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT for table `wallet_transactions`
+--
+ALTER TABLE `wallet_transactions`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
