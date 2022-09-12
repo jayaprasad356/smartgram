@@ -95,7 +95,7 @@ if ($num == 1) {
     return false;
 }
 else{
-    $sql = "INSERT INTO users (`name`,`mobile`,`password`,`occupation`,`gender`,`email`,`address`,`village`,`pincode`,`district`)VALUES('$name','$mobile','$password','$occupation','$gender','$email','$address','$village','$pincode','$district')";
+    $sql = "INSERT INTO users (`name`,`mobile`,`password`,`occupation`,`gender`,`email`,`address`,`village`,`pincode`,`district`,`balance`)VALUES('$name','$mobile','$password','$occupation','$gender','$email','$address','$village','$pincode','$district',0)";
     $db->sql($sql);
     $sql = "SELECT * FROM users WHERE mobile = '$mobile' AND password='$password'";
     $db->sql($sql);

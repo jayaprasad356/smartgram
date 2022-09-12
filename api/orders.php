@@ -19,23 +19,79 @@ if (empty($_POST['user_id'])) {
     print_r(json_encode($response));
     return false;
 }
-if (empty($_POST['product_id'])) {
+if (empty($_POST['method'])) {
     $response['success'] = false;
-    $response['message'] = "Product Id  is Empty";
+    $response['message'] = "Method  is Empty";
     print_r(json_encode($response));
     return false;
 }
-
+if (empty($_POST['delivery_charges'])) {
+    $response['success'] = false;
+    $response['message'] = "Delivery charges  is Empty";
+    print_r(json_encode($response));
+    return false;
+}
+if (empty($_POST['address'])) {
+    $response['success'] = false;
+    $response['message'] = "Address  is Empty";
+    print_r(json_encode($response));
+    return false;
+}
+if (empty($_POST['mobile'])) {
+    $response['success'] = false;
+    $response['message'] = "Mobile  is Empty";
+    print_r(json_encode($response));
+    return false;
+}
+if (empty($_POST['grand_total'])) {
+    $response['success'] = false;
+    $response['message'] = "Grand Total  is Empty";
+    print_r(json_encode($response));
+    return false;
+}
 $user_id = $db->escapeString($_POST['user_id']);
-$product_id = $db->escapeString($_POST['product_id']);
-
-$sql = "INSERT INTO orders (`user_id`,`product_id`,`status`)VALUES('$user_id','$product_id',1)";
+$method = $db->escapeString($_POST['method']);
+$delivery_charges = $db->escapeString($_POST['delivery_charges']);
+$address = $db->escapeString($_POST['address']);
+$mobile = $db->escapeString($_POST['mobile']);
+$grand_total = $db->escapeString($_POST['grand_total']);
+$date = date('Y-m-d');
+$sql = "SELECT *,cart.id AS id  FROM cart,products WHERE cart.product_id=products.id AND cart.user_id='$user_id'";
 $db->sql($sql);
 $res = $db->getResult();
-$response['success'] = true;
-$response['message'] = "Order Placed Successfully ";
-$response['data'] = $res;
-print_r(json_encode($response));
+$num = $db->numRows($res);
+if($num>=1){
+    foreach ($res as $row) {
+        $id = $row['id'];
+        $product_id = $row['product_id'];
+        $total = $row['price'];
+        $quantity = $row['quantity'];
+
+    
+        $sql = "INSERT INTO orders (`user_id`,`product_id`,`method`,`total`,`quantity`,`address`,`mobile`,`delivery_charges`,`status`,`order_date`)VALUES('$user_id','$product_id','$method','$total','$quantity','$address','$mobile','$delivery_charges','Ordered','$date')";
+        $db->sql($sql);
+        $sql = "DELETE FROM cart WHERE id = '$id'";
+        $db->sql($sql);
+
+
+    }
+    if($method == 'Wallet'){
+        $type = 'Upi';
+        $sql = "INSERT INTO wallet_transactions(`user_id`,`date`,`grand_total`,`type`)VALUES('$user_id','$date','$grand_total','$type')";
+        $db->sql($sql);
+        $sql = "UPDATE users SET balance= balance - $grand_total WHERE id=" . $user_id;
+        $db->sql($sql);
+    
+    }
+    $response['success'] = true;
+    $response['message'] = "Order Placed Successfully ";
+    print_r(json_encode($response));
+
+}
+
+
+
+
 
 
 ?>

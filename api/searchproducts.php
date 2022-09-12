@@ -11,38 +11,39 @@ include_once('../includes/crud.php');
 
 $db = new Database();
 $db->connect();
+if (empty($_POST['search'])) {
+    $response['success'] = false;
+    $response['message'] = "Search is Empty";
+    print_r(json_encode($response));
+    return false;
+}
+$search = $db->escapeString($_POST['search']);
 
-$sql = "SELECT *,doctors.name AS doctor_name,appointments.name AS name FROM `appointments`,`doctors` WHERE appointments.doctor_id = doctors.id";
+$sql = "SELECT * FROM `products`WHERE product_name like '%" . $search . "%'";
 $db->sql($sql);
 $res = $db->getResult();
 $num = $db->numRows($res);
 if ($num >= 1) {
+    
     foreach ($res as $row) {
         $temp['id'] = $row['id'];
-        $temp['name'] = $row['name'];
-        $temp['mobile'] = $row['mobile'];
-        $temp['age'] = $row['age'];
-        $temp['disease'] = $row['disease'];
-        $temp['place'] = $row['place'];
+        $temp['product_name'] = $row['product_name'];
+        $temp['brand'] = $row['brand'];
+        $temp['price'] = $row['price'];
         $temp['description'] = $row['description'];
-        $temp['doctor_name'] = $row['doctor_name'];
-        $temp['role'] = $row['role'];
-        $temp['experience'] = $row['experience'];
-        $temp['fees'] = $row['fees'];
         $temp['image'] = DOMAIN_URL . $row['image'];
         $rows[] = $temp;
         
     }
-    
+
     $response['success'] = true;
-    $response['message'] = "Appointments listed Successfully";
+    $response['message'] = "Products listed Successfully";
     $response['data'] = $rows;
     print_r(json_encode($response));
-    
 
 }else{
     $response['success'] = false;
-    $response['message'] = "No Appointments Found";
+    $response['message'] = "No Products Found";
     print_r(json_encode($response));
 
 }

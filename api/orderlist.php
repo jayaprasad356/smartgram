@@ -24,26 +24,29 @@ $res = $db->getResult();
 $num = $db->numRows($res);
 if ($num >= 1){
     
-        $sql = "SELECT *,products.image AS image,orders.id AS id FROM orders,products,users,addresses WHERE orders.product_id = products.id AND orders.user_id=users.id AND addresses.user_id=users.id AND orders.user_id='$user_id'";
+        $sql = "SELECT *,orders.id AS id,orders.status AS status FROM orders,products WHERE orders.product_id = products.id AND orders.user_id='$user_id'";
         $db->sql($sql);
         $res = $db->getResult();
         $num = $db->numRows($res);
         
             foreach ($res as $row) {
                 $temp['id'] = $row['id'];
-                $temp['mobile'] = $row['mobile'];
-                $temp['name'] =$row['name'];
-                $temp['product_name'] = $row['product_name'];
-                $temp['brand'] = $row['brand'];
-                $temp['price'] = $row['price'];
+                $temp['user_id'] = $row['user_id'];
+                $temp['product_id'] = $row['product_id'];
+                $temp['method'] = $row['method'];
+                $temp['total'] = $row['total'];
+                $temp['quantity'] =$row['quantity'];
                 $temp['address'] = $row['address'];
-                $temp['landmark'] = $row['landmark'];
-                $temp['city'] = $row['city'];
-                $temp['district'] = $row['district'];
-                $temp['pincode'] = $row['pincode'];
-                $temp['state'] = $row['state'];
-                $temp['country'] = $row['country'];
+                $temp['mobile'] = $row['mobile'];
+                $temp['delivery_charges'] = $row['delivery_charges'];
+                $temp['status'] = $row['status'];
+                $temp['category_id'] = $row['category_id'];
+                $temp['product_name'] = $row['product_name'];
+                $temp['price'] = $row['price'];
+                $temp['brand'] = $row['brand'];
+                $temp['description'] = $row['description'];
                 $temp['image'] = DOMAIN_URL . $row['image'];
+                $temp['order_date'] = $row['order_date'];
                 $rows[] = $temp;
                 
             }
