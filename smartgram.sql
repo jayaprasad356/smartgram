@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 12, 2022 at 08:03 AM
--- Server version: 10.4.22-MariaDB
--- PHP Version: 7.4.27
+-- Generation Time: Sep 12, 2022 at 08:55 AM
+-- Server version: 10.4.24-MariaDB
+-- PHP Version: 7.4.29
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -156,7 +156,7 @@ CREATE TABLE `doctors` (
 --
 
 INSERT INTO `doctors` (`id`, `name`, `role`, `experience`, `fees`, `image`) VALUES
-(1, 'James', 'Veterinary doctor', '4 Years', 0, 'upload/doctors/1662113175.0499.jpg');
+(1, 'James', 'Veterinary doctor', '4 Years', 100, 'upload/doctors/1662113175.0499.jpg');
 
 -- --------------------------------------------------------
 
@@ -334,7 +334,7 @@ INSERT INTO `wallet_transactions` (`id`, `user_id`, `date`, `amount`, `type`) VA
 (3, 5, '2022-09-11', 100, 'credit'),
 (4, 5, '2022-09-11', 500, 'credit'),
 (5, 5, '2022-09-11', 100, 'credit'),
-(6, 5, '2022-09-11', 2000, 'credit');
+(6, 7, '2022-09-11', 2000, 'credit');
 
 --
 -- Indexes for dumped tables
@@ -444,7 +444,7 @@ ALTER TABLE `cart`
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `delivery_charges`

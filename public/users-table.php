@@ -26,7 +26,11 @@
                                     <th  data-field="password" data-sortable="true"> Password</th>
                                     <th  data-field="occupation" data-sortable="true">Occupation</th>
                                     <th  data-field="gender" data-sortable="true"> Gender</th>
-                                    <th  data-field="email" data-sortable="true">Email</th>
+                                    <th  data-field="address" data-sortable="true">Address</th>
+                                    <th  data-field="village" data-sortable="true">Village</th>
+                                    <th  data-field="pincode" data-sortable="true">Pincode</th>
+                                    <th  data-field="district" data-sortable="true">District</th>
+                                    <th  data-field="balance" data-sortable="true">Balance</th>
                                 </tr>
                             </thead>
                         </table>

@@ -182,12 +182,12 @@ $fn = new custom_functions;
                         <span>Users</span>
                     </a>
                 </li>
-                <li class="treeview">
+                <!-- <li class="treeview">
                     <a href="addresses.php">
                         <i class="fa fa-home"></i>
                         <span>Addresses</span>
                     </a>
-                </li>
+                </li> -->
                 <li class="treeview">
                     <a href="doctors.php">
                         <i class="fa fa-users"></i>
@@ -204,6 +204,12 @@ $fn = new custom_functions;
                     <a href="orders.php">
                         <i class="fa fa-shopping-cart"></i>
                         <span>Orders</span>
+                    </a>
+                </li>
+                <li class="treeview">
+                    <a href="transactions.php">
+                    <i class="fa fa-credit-card"></i>
+                        <span>Wallet Transactions</span>  
                     </a>
                 </li>
                 <li class="treeview">
