@@ -155,14 +155,15 @@ if (isset($_POST['btnAdd'])) {
 <div class="separator"> </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
 <script>
-    $('#add_product').validate({
+    $('#add_doctor_form').validate({
 
         ignore: [],
         debug: false,
         rules: {
-            product_name: "required",
-            brand: "required",
-            category_image: "required",
+            name: "required",
+            role: "required",
+            product_image: "required",
+            fees:"required",
         }
     });
     $('#btnClear').on('click', function() {

@@ -61,7 +61,7 @@ if (isset($_GET['table']) && $_GET['table'] == 'users') {
 
     if (isset($_GET['search']) && !empty($_GET['search'])) {
         $search = $db->escapeString($fn->xss_clean($_GET['search']));
-        $where .= "WHERE name like '%" . $search . "%' OR mobile like '%" . $search . "%'";
+        $where .= "WHERE name like '%" . $search . "%' OR mobile like '%" . $search . "%'  OR pincode like '%" . $search . "%'  OR address like '%" . $search . "%'  OR district like '%" . $search . "%'";
     }
     if (isset($_GET['sort'])){
         $sort = $db->escapeString($_GET['sort']);
@@ -94,7 +94,11 @@ if (isset($_GET['table']) && $_GET['table'] == 'users') {
         $tempRow['password'] = $row['password'];
         $tempRow['occupation'] = $row['occupation'];
         $tempRow['gender'] = $row['gender'];
-        $tempRow['email'] = $row['email'];
+        $tempRow['address'] = $row['address'];
+        $tempRow['village'] = $row['village'];
+        $tempRow['pincode'] = $row['pincode'];
+        $tempRow['district'] = $row['district'];
+        $tempRow['balance'] = $row['balance'];
         $rows[] = $tempRow;
         }
     $bulkData['rows'] = $rows;
@@ -451,7 +455,7 @@ if (isset($_GET['table']) && $_GET['table'] == 'appointments') {
 
     if (isset($_GET['search']) && !empty($_GET['search'])) {
         $search = $db->escapeString($fn->xss_clean($_GET['search']));
-        $where .= "WHERE name like '%" . $search . "%' OR doctor_id like '%" . $search . "%'OR mobile like '%" . $search . "%'OR location like '%" . $search . "%'";
+        $where .= "WHERE name like '%" . $search . "%' OR doctor_id like '%" . $search . "%' OR mobile like '%" . $search . "%' OR place like '%" . $search . "%' OR disease like '%" . $search . "%'";
     }
     if (isset($_GET['sort'])){
         $sort = $db->escapeString($_GET['sort']);
@@ -556,6 +560,63 @@ if (isset($_GET['table']) && $_GET['table'] == 'doctors') {
 
         }
         $tempRow['operate'] = $operate;
+        $rows[] = $tempRow;
+    }
+    $bulkData['rows'] = $rows;
+    print_r(json_encode($bulkData));
+}
+
+if (isset($_GET['table']) && $_GET['table'] == 'wallet_transactions') {
+
+    $offset = 0;
+    $limit = 10;
+    $where = '';
+    $sort = 'id';
+    $order = 'DESC';
+    if (isset($_GET['offset']))
+        $offset = $db->escapeString($_GET['offset']);
+    if (isset($_GET['limit']))
+        $limit = $db->escapeString($_GET['limit']);
+    if (isset($_GET['sort']))
+        $sort = $db->escapeString($_GET['sort']);
+    if (isset($_GET['order']))
+        $order = $db->escapeString($_GET['order']);
+
+    if (isset($_GET['search']) && !empty($_GET['search'])) {
+        $search = $db->escapeString($_GET['search']);
+        $where .= "WHERE user_id like '%" . $search . "%' OR type like '%" . $search . "%'OR amount like '%" . $search . "%'OR date like '%" . $search . "%'";
+    }
+    if (isset($_GET['sort'])){
+        $sort = $db->escapeString($_GET['sort']);
+    }
+    if (isset($_GET['order'])){
+        $order = $db->escapeString($_GET['order']);
+    }
+    $sql = "SELECT COUNT(`id`) as total FROM `wallet_transactions` ";
+    $db->sql($sql);
+    $res = $db->getResult();
+    foreach ($res as $row)
+        $total = $row['total'];
+   
+    $sql = "SELECT *,wallet_transactions.id as id FROM wallet_transactions,users WHERE users.id=wallet_transactions.user_id";
+    $db->sql($sql);
+    $res = $db->getResult();
+
+    $bulkData = array();
+    $bulkData['total'] = $total;
+    
+    $rows = array();
+    $tempRow = array();
+
+    foreach ($res as $row) {
+
+        
+        $tempRow['id'] = $row['id'];
+        $tempRow['name'] = $row['name'];
+        $tempRow['mobile'] = $row['mobile'];
+        $tempRow['date'] = $row['date'];
+        $tempRow['amount'] = $row['amount'];
+        $tempRow['type'] = $row['type'];
         $rows[] = $tempRow;
     }
     $bulkData['rows'] = $rows;
