@@ -52,7 +52,7 @@ if($num==1){
         $sql = "SELECT * FROM `delivery_charges`";
         $db->sql($sql);
         $res = $db->getResult();
-        $deliver_charges = $res[0]['delivery_charges'] * $num;
+        $deliver_charges = $res[0]['delivery_charge'] * $num;
         $grand_total = $sum + $deliver_charges;
         $response['sub_total'] = $sum;
         $response['delivery_charges'] = $deliver_charges;
