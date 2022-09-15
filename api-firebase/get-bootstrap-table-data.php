@@ -493,6 +493,8 @@ if (isset($_GET['table']) && $_GET['table'] == 'appointments') {
         $tempRow['disease'] = $row['disease'];
         $tempRow['place'] = $row['place'];
         $tempRow['description'] = $row['description'];
+        $tempRow['appointment_date'] = $row['appointment_date'];
+        $tempRow['appointment_time'] = $row['appointment_time'];
         $rows[] = $tempRow;
     }
     $bulkData['rows'] = $rows;

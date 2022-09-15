@@ -28,6 +28,8 @@
                                     <th  data-field="disease" data-sortable="true">Disease</th>
                                     <th  data-field="place" data-sortable="true"> Place</th>
                                     <th  data-field="description" data-sortable="true">Description</th>
+                                    <th  data-field="appointment_date" data-sortable="true">Appointment Date</th>
+                                    <th  data-field="appointment_time" data-sortable="true">Appointment Time</th>
                                 </tr>
                             </thead>
                         </table>

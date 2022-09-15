@@ -19,7 +19,7 @@ if (empty($_POST['user_id'])) {
     return false;
 }
 $user_id = $db->escapeString($_POST['user_id']);
-$sql = "SELECT *,cart.id AS id  FROM cart,products WHERE cart.product_id=products.id AND cart.user_id='$user_id'";
+$sql = "SELECT *,cart.id AS id,products.price * cart.quantity AS price  FROM cart,products WHERE cart.product_id=products.id AND cart.user_id='$user_id'";
 $db->sql($sql);
 $res = $db->getResult();
 $num = $db->numRows($res);
