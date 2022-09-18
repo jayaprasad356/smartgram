@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 12, 2022 at 08:55 AM
+-- Generation Time: Sep 18, 2022 at 07:14 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -227,7 +227,7 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `category_id`, `product_name`, `price`, `brand`, `description`, `image`) VALUES
-(1, 1, 'Pottasium Fertilizer', 2000, 'NPK', 'You can use this material without adding water', 'upload/products/9231-2022-09-02.jpg');
+(2, 1, 'Pottassium Fertilizer', 2000, 'NPK', 'You would use this material without adding water', 'upload/products/2218-2022-09-18.jpg');
 
 -- --------------------------------------------------------
 
@@ -272,7 +272,7 @@ CREATE TABLE `slides` (
 --
 
 INSERT INTO `slides` (`id`, `name`, `image`, `status`) VALUES
-(1, 'Fertilizers', 'upload/slides/7277-2022-09-02.jpg', 1);
+(1, 'Fertilizers', 'upload/slides/7277-2022-09-02.jpg', 0);
 
 -- --------------------------------------------------------
 
@@ -474,7 +474,7 @@ ALTER TABLE `orders`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `settings`
