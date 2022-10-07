@@ -2,10 +2,10 @@
 -- version 4.9.7
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Sep 18, 2022 at 07:14 AM
--- Server version: 10.4.24-MariaDB
--- PHP Version: 7.4.29
+-- Host: localhost:3306
+-- Generation Time: Oct 07, 2022 at 07:53 AM
+-- Server version: 5.7.37-cll-lve
+-- PHP Version: 7.3.32
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -257,7 +257,14 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `category_id`, `product_name`, `price`, `brand`, `description`, `image`) VALUES
-(2, 1, 'Pottassium Fertilizer', 2000, 'NPK', 'You would use this material without adding water', 'upload/products/2218-2022-09-18.jpg');
+(1, 4, 'Pottasium Fertilizer', 2000, 'NPK', 'Industry Standard', 'upload/products/9231-2022-09-02.jpg'),
+(2, 4, 'Cattle Feed ', 5000, 'RCF', 'Best Nutrition For Your Cattle ', 'upload/products/9729-2022-09-17.jpg'),
+(3, 1, 'Tea', 280, 'Patent Tea Gold', 'Finest Blend Superior Taste ', 'upload/products/7051-2022-09-17.jpg'),
+(4, 1, 'Tea', 260, 'Patent Tea Gold', 'Premium Tea ', 'upload/products/3134-2022-09-17.jpg'),
+(5, 1, 'Tea', 240, 'Patent Tea Morning', 'Superior Taste ', 'upload/products/0826-2022-09-17.jpg'),
+(6, 1, 'Tea', 220, 'Patent Tea 100', 'Bestselling Tea', 'upload/products/9265-2022-09-17.jpg'),
+(7, 1, 'test', 3566, 'test', 'test', 'upload/products/5967-2022-10-06.png'),
+(8, 1, 'test', 3000, 'test', 'fdfdfd', 'upload/products/2282-2022-10-06.jpg');
 
 -- --------------------------------------------------------
 
@@ -302,7 +309,11 @@ CREATE TABLE `slides` (
 --
 
 INSERT INTO `slides` (`id`, `name`, `image`, `status`) VALUES
-(1, 'Fertilizers', 'upload/slides/7277-2022-09-02.jpg', 0);
+(4, 'Accessibility ', 'upload/slides/6441-2022-09-17.jpg', 1),
+(5, 'Daily Needs ', 'upload/slides/5950-2022-09-17.jpg', 1),
+(11, 'HealthCare', 'upload/slides/5033-2022-09-17.jpg', 1),
+(12, 'Agriculture ', 'upload/slides/6177-2022-09-17.jpg', 1),
+(13, 'Fintech ', 'upload/slides/6598-2022-09-17.jpg', 1);
 
 -- --------------------------------------------------------
 
@@ -513,7 +524,7 @@ ALTER TABLE `orders`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `settings`
