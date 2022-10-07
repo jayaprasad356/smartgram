@@ -210,7 +210,7 @@ if (isset($_GET['table']) && $_GET['table'] == 'categories') {
     foreach ($res as $row) {
 
         
-        $operate = ' <a href="edit-category.php?id=' . $row['id'] . '"><i class="fa fa-edit"></i></a>';
+        $operate = ' <a href="edit-category.php?id=' . $row['id'] . '"><i class="fa fa-edit"></i>Edit</a>';
         //$operate = ' <a class="btn-xs btn-danger" href="delete-category.php?id=' . $row['id'] . '"><i class="fa fa-trash-o"></i>Delete</a>';
 
         $tempRow['id'] = $row['id'];
@@ -274,6 +274,7 @@ if (isset($_GET['table']) && $_GET['table'] == 'products') {
 
         
         $operate = ' <a href="edit-product.php?id=' . $row['id'] . '"><i class="fa fa-edit"></i>Edit</a>';
+        $operate .= ' <a class="text text-danger" href="delete-product.php?id=' . $row['id'] . '"><i class="fa fa-trash"></i>Delete</a>';
         $tempRow['id'] = $row['id'];
         $tempRow['category_id'] = $row['category_id'];
         $tempRow['product_name'] = $row['product_name'];
@@ -339,9 +340,8 @@ if (isset($_GET['table']) && $_GET['table'] == 'slides') {
     $tempRow = array();
 
     foreach ($res as $row) {
-
-        $operate = ' <a class="text text-danger" href="delete-slide.php?id=' . $row['id'] . '"><i class="fa fa-trash"></i>Delete</a>';
-
+        $operate = ' <a  href="edit-slide.php?id=' . $row['id'] . '"><i class="fa fa-edit"></i>Edit</a>';
+        $operate .= ' <a class="text text-danger" href="delete-slide.php?id=' . $row['id'] . '"><i class="fa fa-trash"></i>Delete</a>';
         $tempRow['id'] = $row['id'];
         $tempRow['name'] = $row['name'];
         if(!empty($row['image'])){
@@ -355,7 +355,7 @@ if (isset($_GET['table']) && $_GET['table'] == 'slides') {
         if ($row['status'] == 1)
             $tempRow['status'] = "<p class='text text-success'> Active</p>";
         else 
-            $tempRow['status'] = "<p class='text text-success'>Inactive</p>";
+            $tempRow['status'] = "<p class='text text-danger'>Inactive</p>";
        $tempRow['operate'] = $operate;
         $rows[] = $tempRow;
     }
