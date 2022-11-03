@@ -382,7 +382,7 @@ if (isset($_GET['table']) && $_GET['table'] == 'orders') {
 
     if (isset($_GET['search']) && !empty($_GET['search'])) {
         $search = $db->escapeString($fn->xss_clean($_GET['search']));
-        $where .= "WHERE product_name like '%" . $search . "%' OR brand like '%" . $search . "%'OR status like '%" . $search . "%'OR mobile like '%" . $search . "%'";
+        $where .= "WHERE p.product_name like '%" . $search . "%' OR p.brand like '%" . $search . "%' OR o.status like '%" . $search . "%' OR u.mobile like '%" . $search . "%' OR u.name like '%" . $search . "%'";
     }
     if (isset($_GET['sort'])){
         $sort = $db->escapeString($_GET['sort']);
@@ -391,17 +391,20 @@ if (isset($_GET['table']) && $_GET['table'] == 'orders') {
     if (isset($_GET['order'])){
         $order = $db->escapeString($_GET['order']);
     }
-    $sql = "SELECT COUNT(`id`) as total FROM `orders` ";
+
+    $join = "LEFT JOIN `users` u ON o.user_id = u.id 
+    LEFT JOIN `products` p ON  p.id=o.product_id";
+
+    $sql = "SELECT COUNT(o.id) as `total` FROM `orders` o $join " . $where . "";
     $db->sql($sql);
     $res = $db->getResult();
     foreach ($res as $row)
         $total = $row['total'];
 
-    $sql = "SELECT *,orders.id AS id,orders.status AS status FROM orders,products,users WHERE users.id=orders.user_id AND orders.product_id=products.id";
+    $sql = "SELECT o.id AS id,o.*,o.status AS status,u.name AS user_name,u.mobile,p.product_name,p.brand,p.price FROM `orders` o  $join 
+             $where ORDER BY $sort $order LIMIT $offset, $limit";
     $db->sql($sql);
     $res = $db->getResult();
-
-    
     $bulkData = array();
     $bulkData['total'] = $total;
     
@@ -412,11 +415,13 @@ if (isset($_GET['table']) && $_GET['table'] == 'orders') {
 
         $operate = '<a href="view-order.php?id=' . $row['id'] . '" class="label label-primary" title="View">View</a>';
         $tempRow['id'] = $row['id'];
-        $tempRow['name'] = $row['name'];
+        $tempRow['order_date'] = $row['order_date'];
+        $tempRow['user_name'] = $row['user_name'];
         $tempRow['mobile'] = $row['mobile'];
         $tempRow['product_name'] = $row['product_name'];
         $tempRow['brand'] = $row['brand'];
         $tempRow['price'] = $row['price'];
+        $tempRow['method'] = $row['method'];
         if(!empty($row['image'])){
             $tempRow['image'] = "<a data-lightbox='category' href='" . $row['image'] . "' data-caption='" . $row['name'] . "'><img src='" . $row['image'] . "' title='" . $row['name'] . "' height='50' /></a>";
 

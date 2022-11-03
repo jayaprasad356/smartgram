@@ -22,11 +22,13 @@
                             <thead>
                                 <tr>
                                     <th data-field="id" data-sortable="true">ID</th>
-                                    <th data-field="name" data-sortable="true">Name</th>
+                                    <th data-field="order_date" data-sortable="true">Order Date</th>
+                                    <th data-field="user_name" data-sortable="true">Name</th>
                                     <th data-field="mobile" data-sortable="true">Mobile</th>
                                     <th data-field="product_name" data-sortable="true">Product Name</th>
                                     <th data-field="brand" data-sortable="true">Brand</th>
                                     <th data-field="price" data-sortable="true">Price</th>
+                                    <th data-field="method" data-sortable="true">Payment Method</th>
                                     <th data-field="image">Image</th>
                                     <th data-field="status">Status</th>
                                     <th  data-field="operate" data-events="actionEvents">Action</th>   

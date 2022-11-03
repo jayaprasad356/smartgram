@@ -48,6 +48,10 @@ $res = $db->getResult();
                                 <td><?php echo $res[0]['brand'] ?></td>
                             </tr>
                             <tr>
+                                <th style="width: 200px">Quantity</th>
+                                <td><?php echo $res[0]['quantity'] ?></td>
+                            </tr>
+                            <tr>
                                 <th style="width: 200px">Price</th>
                                 <td><?php echo $res[0]['price'] ?></td>
                             </tr>
@@ -74,6 +78,14 @@ $res = $db->getResult();
                             <tr>
                                 <th style="width: 200px">Country</th>
                                 <td><?php echo $res[0]['country'] ?></td>
+                            </tr>
+                            <tr>
+                                <th style="width: 200px">Payment Method</th>
+                                <td><?php echo $res[0]['method'] ?></td>
+                            </tr>
+                            <tr>
+                                <th style="width: 200px">Delivery Charges</th>
+                                <td><?php echo $res[0]['delivery_charges'] ?></td>
                             </tr>
                             <tr>
                                 <th style="width: 200px">Status</th>
