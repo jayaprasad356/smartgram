@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.7
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:3306
--- Generation Time: Oct 07, 2022 at 07:53 AM
--- Server version: 5.7.37-cll-lve
--- PHP Version: 7.3.32
+-- Host: 127.0.0.1
+-- Generation Time: Nov 07, 2022 at 08:30 AM
+-- Server version: 10.4.24-MariaDB
+-- PHP Version: 7.4.29
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -31,13 +30,13 @@ SET time_zone = "+00:00";
 CREATE TABLE `addresses` (
   `id` int(11) NOT NULL,
   `user_id` int(11) DEFAULT NULL,
-  `address` text,
-  `landmark` text,
-  `city` text,
-  `district` text,
-  `pincode` text,
-  `state` text,
-  `country` text
+  `address` text DEFAULT NULL,
+  `landmark` text DEFAULT NULL,
+  `city` text DEFAULT NULL,
+  `district` text DEFAULT NULL,
+  `pincode` text DEFAULT NULL,
+  `state` text DEFAULT NULL,
+  `country` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -57,13 +56,13 @@ CREATE TABLE `appointments` (
   `id` int(11) NOT NULL,
   `user_id` int(11) DEFAULT NULL,
   `doctor_id` int(11) DEFAULT NULL,
-  `name` text,
-  `mobile` text,
-  `age` text,
-  `disease` text,
-  `place` text,
-  `history` text,
-  `description` text,
+  `name` text DEFAULT NULL,
+  `mobile` text DEFAULT NULL,
+  `age` text DEFAULT NULL,
+  `disease` text DEFAULT NULL,
+  `place` text DEFAULT NULL,
+  `history` text DEFAULT NULL,
+  `description` text DEFAULT NULL,
   `appointment_date` varchar(255) DEFAULT NULL,
   `appointment_time` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -94,7 +93,7 @@ CREATE TABLE `cart` (
   `user_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
   `quantity` int(11) DEFAULT NULL,
-  `date_created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `date_created` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -116,11 +115,11 @@ INSERT INTO `cart` (`id`, `user_id`, `product_id`, `quantity`, `date_created`) V
 
 CREATE TABLE `categories` (
   `id` int(11) NOT NULL,
-  `name` text,
-  `image` text,
+  `name` text DEFAULT NULL,
+  `image` text DEFAULT NULL,
   `status` tinyint(11) DEFAULT NULL,
-  `last_updated` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
-  `date_created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `last_updated` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp(),
+  `date_created` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -157,16 +156,36 @@ INSERT INTO `delivery_charges` (`id`, `delivery_charge`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `deliver_pincodes`
+--
+
+CREATE TABLE `deliver_pincodes` (
+  `id` int(11) NOT NULL,
+  `pincode` int(200) DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `deliver_pincodes`
+--
+
+INSERT INTO `deliver_pincodes` (`id`, `pincode`) VALUES
+(1, 621313),
+(2, 675894),
+(3, 600028);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `doctors`
 --
 
 CREATE TABLE `doctors` (
   `id` int(11) NOT NULL,
-  `name` text,
-  `role` text,
-  `experience` text,
+  `name` text DEFAULT NULL,
+  `role` text DEFAULT NULL,
+  `experience` text DEFAULT NULL,
   `fees` int(11) DEFAULT NULL,
-  `image` text
+  `image` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -188,8 +207,8 @@ INSERT INTO `doctors` (`id`, `name`, `role`, `experience`, `fees`, `image`) VALU
 
 CREATE TABLE `notifications` (
   `id` int(11) NOT NULL,
-  `title` text,
-  `description` text
+  `title` text DEFAULT NULL,
+  `description` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -215,11 +234,11 @@ CREATE TABLE `orders` (
   `method` varchar(255) DEFAULT NULL,
   `total` int(11) DEFAULT NULL,
   `quantity` int(11) DEFAULT NULL,
-  `address` text,
+  `address` text DEFAULT NULL,
   `mobile` varchar(255) DEFAULT NULL,
   `delivery_charges` int(11) DEFAULT NULL,
   `order_date` varchar(255) DEFAULT NULL,
-  `status` text
+  `status` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -245,26 +264,28 @@ INSERT INTO `orders` (`id`, `user_id`, `product_id`, `method`, `total`, `quantit
 CREATE TABLE `products` (
   `id` int(11) NOT NULL,
   `category_id` int(11) DEFAULT NULL,
-  `product_name` text,
+  `product_name` text DEFAULT NULL,
   `price` int(11) DEFAULT NULL,
-  `brand` text,
-  `description` text,
-  `image` text
+  `brand` text DEFAULT NULL,
+  `type` text DEFAULT NULL,
+  `pincodes` text DEFAULT NULL,
+  `description` text DEFAULT NULL,
+  `image` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `products`
 --
 
-INSERT INTO `products` (`id`, `category_id`, `product_name`, `price`, `brand`, `description`, `image`) VALUES
-(1, 4, 'Pottasium Fertilizer', 2000, 'NPK', 'Industry Standard', 'upload/products/9231-2022-09-02.jpg'),
-(2, 4, 'Cattle Feed ', 5000, 'RCF', 'Best Nutrition For Your Cattle ', 'upload/products/9729-2022-09-17.jpg'),
-(3, 1, 'Tea', 280, 'Patent Tea Gold', 'Finest Blend Superior Taste ', 'upload/products/7051-2022-09-17.jpg'),
-(4, 1, 'Tea', 260, 'Patent Tea Gold', 'Premium Tea ', 'upload/products/3134-2022-09-17.jpg'),
-(5, 1, 'Tea', 240, 'Patent Tea Morning', 'Superior Taste ', 'upload/products/0826-2022-09-17.jpg'),
-(6, 1, 'Tea', 220, 'Patent Tea 100', 'Bestselling Tea', 'upload/products/9265-2022-09-17.jpg'),
-(7, 1, 'test', 3566, 'test', 'test', 'upload/products/5967-2022-10-06.png'),
-(8, 1, 'test', 3000, 'test', 'fdfdfd', 'upload/products/2282-2022-10-06.jpg');
+INSERT INTO `products` (`id`, `category_id`, `product_name`, `price`, `brand`, `type`, `pincodes`, `description`, `image`) VALUES
+(1, 4, 'Pottasium Fertilizer', 2000, 'NPK', NULL, NULL, 'Industry Standard', 'upload/products/9231-2022-09-02.jpg'),
+(2, 4, 'Cattle Feed ', 5000, 'RCF', NULL, NULL, 'Best Nutrition For Your Cattle ', 'upload/products/9729-2022-09-17.jpg'),
+(3, 1, 'Tea', 280, 'Patent Tea Gold', NULL, NULL, 'Finest Blend Superior Taste ', 'upload/products/7051-2022-09-17.jpg'),
+(4, 1, 'Tea', 260, 'Patent Tea Gold', NULL, NULL, 'Premium Tea ', 'upload/products/3134-2022-09-17.jpg'),
+(5, 1, 'Tea', 240, 'Patent Tea Morning', NULL, NULL, 'Superior Taste ', 'upload/products/0826-2022-09-17.jpg'),
+(6, 1, 'Tea', 220, 'Patent Tea 100', NULL, NULL, 'Bestselling Tea', 'upload/products/9265-2022-09-17.jpg'),
+(7, 1, 'test', 3566, 'test', NULL, NULL, 'test', 'upload/products/5967-2022-10-06.png'),
+(8, 1, 'test', 3000, 'test', 'all', '', 'fdfdfd', 'upload/products/2282-2022-10-06.jpg');
 
 -- --------------------------------------------------------
 
@@ -274,14 +295,14 @@ INSERT INTO `products` (`id`, `category_id`, `product_name`, `price`, `brand`, `
 
 CREATE TABLE `settings` (
   `id` int(11) NOT NULL,
-  `name` text,
-  `mobile` text,
-  `email` text,
-  `address` text,
-  `whatsapp` text,
-  `facebook` text,
-  `twitter` text,
-  `instagram` text
+  `name` text DEFAULT NULL,
+  `mobile` text DEFAULT NULL,
+  `email` text DEFAULT NULL,
+  `address` text DEFAULT NULL,
+  `whatsapp` text DEFAULT NULL,
+  `facebook` text DEFAULT NULL,
+  `twitter` text DEFAULT NULL,
+  `instagram` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -299,8 +320,8 @@ INSERT INTO `settings` (`id`, `name`, `mobile`, `email`, `address`, `whatsapp`, 
 
 CREATE TABLE `slides` (
   `id` int(11) NOT NULL,
-  `name` text,
-  `image` text,
+  `name` text DEFAULT NULL,
+  `image` text DEFAULT NULL,
   `status` tinyint(4) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -323,17 +344,17 @@ INSERT INTO `slides` (`id`, `name`, `image`, `status`) VALUES
 
 CREATE TABLE `users` (
   `id` int(11) NOT NULL,
-  `name` text,
-  `mobile` text,
-  `password` text,
-  `occupation` text,
-  `gender` text,
-  `email` text,
-  `address` text,
+  `name` text DEFAULT NULL,
+  `mobile` text DEFAULT NULL,
+  `password` text DEFAULT NULL,
+  `occupation` text DEFAULT NULL,
+  `gender` text DEFAULT NULL,
+  `email` text DEFAULT NULL,
+  `address` text DEFAULT NULL,
   `village` varchar(255) DEFAULT NULL,
   `pincode` varchar(255) DEFAULT NULL,
   `district` varchar(255) DEFAULT NULL,
-  `balance` int(11) NOT NULL DEFAULT '0'
+  `balance` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -421,6 +442,12 @@ ALTER TABLE `delivery_charges`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `deliver_pincodes`
+--
+ALTER TABLE `deliver_pincodes`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `doctors`
 --
 ALTER TABLE `doctors`
@@ -503,6 +530,12 @@ ALTER TABLE `delivery_charges`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT for table `deliver_pincodes`
+--
+ALTER TABLE `deliver_pincodes`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT for table `doctors`
 --
 ALTER TABLE `doctors`
@@ -524,7 +557,7 @@ ALTER TABLE `orders`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `settings`

@@ -12,6 +12,19 @@ $res = $db->getResult();
 <?php
 if (isset($_POST['btnAdd'])) {
 
+
+        $pincode_type = (isset($_POST['product_pincodes']) && $_POST['product_pincodes'] != '') ? $db->escapeString($fn->xss_clean($_POST['product_pincodes'])) : "";
+        if ($pincode_type == "all") {
+            $pincode_ids = NULL;
+        } else {
+
+            if (empty($_POST['pincode_ids_exc'])) {
+                $error['pincode_ids_exc'] = "<label class='label label-danger'>Select pincodes!.</label>";
+            } else {
+                $pincode_ids = $fn->xss_clean_array($_POST['pincode_ids_exc']);
+                $pincode_ids = implode(",", $pincode_ids);
+            }
+        }
         $category = $db->escapeString(($_POST['category']));
         $product_name = $db->escapeString($_POST['product_name']);
         $brand = $db->escapeString($_POST['brand']);
@@ -64,7 +77,7 @@ if (isset($_POST['btnAdd'])) {
 
             
            
-            $sql_query = "INSERT INTO products (category_id,product_name,brand,price,description,image)VALUES('$category','$product_name','$brand','$price','$description','$upload_image')";
+            $sql_query = "INSERT INTO products (category_id,product_name,brand,price,description,type,pincodes,image)VALUES('$category','$product_name','$brand','$price','$description','$pincode_type','$pincode_ids','$upload_image')";
             $db->sql($sql_query);
             $result = $db->getResult();
             if (!empty($result)) {
@@ -130,7 +143,7 @@ if (isset($_POST['btnAdd'])) {
                                    
                                 </div>
                             </div>
-                            <hr>
+                            <br>
                             <div class="row">
                                 <div class="form-group">
                                    <div class="col-md-4">
@@ -144,7 +157,36 @@ if (isset($_POST['btnAdd'])) {
 
                                 </div>
                             </div>
-                            <hr>
+                            <br>
+                            <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="product_pincodes">Delivery Places :</label><i class="text-danger asterik">*</i>
+                                            <select name="product_pincodes" id="product_pincodes" class="form-control" required>
+                                                <option value="">Select Option</option>
+                                                <option value="included">Pincode Included</option>
+                                                <option value="excluded">Pincode Excluded</option>
+                                                <option value="all">Includes All</option>
+                                            </select>
+                                            <br />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 pincodes">
+                                        <div class="form-group ">
+                                            <label for='pincode_ids_exc'>Select Pincodes <small>( Ex : 100,205, 360 <comma separated>)</small></label><?php echo isset($error['pincode_ids_exc']) ? $error['pincode_ids_exc'] : ''; ?>
+                                            <select name='pincode_ids_exc[]' id='pincode_ids_exc' class='form-control' placeholder='Enter the pincode you want to allow delivery this product' multiple="multiple">
+                                                <?php $sql = 'select id,pincode from `deliver_pincodes` order by id desc';
+                                                $db->sql($sql);
+                                                $result = $db->getResult();
+                                                foreach ($result as $value) {
+                                                ?>
+                                                    <option value='<?= $value['id'] ?>'><?= $value['pincode'] ?></option>
+                                                <?php } ?>
+
+                                            </select>
+                                        </div>
+                                    </div>
+                            </div>
                             <div class="row">
                                 <div class="form-group">
                                     <div class="col-md-4">
@@ -188,12 +230,41 @@ if (isset($_POST['btnAdd'])) {
             brand: "required",
             price,"required",
             category_image: "required",
+            pincode_ids_inc: {
+                empty: {
+                    depends: function(element) {
+                        return $("#pincode_ids_exc").is(":blank");
+                    }
+                }
+            }
         }
     });
     $('#btnClear').on('click', function() {
         for (instance in CKEDITOR.instances) {
             CKEDITOR.instances[instance].setData('');
         }
+    });
+    $('#pincode_ids_exc').prop('disabled', true);
+
+    $('#product_pincodes').on('change', function() {
+        var val = $('#product_pincodes').val();
+        if (val == "included" || val == "excluded") {
+            $('#pincode_ids_exc').prop('disabled', false);
+        } else {
+            $('#pincode_ids_exc').prop('disabled', true);
+        }
+    });
+    $('#pincode_ids_exc').select2({
+        width: 'element',
+        placeholder: 'type in category name to search',
+
+    });
+</script>
+<script>
+    $('#pincode_ids_inc').select2({
+        width: 'element',
+        placeholder: 'type in category name to search',
+
     });
 </script>
 <script>

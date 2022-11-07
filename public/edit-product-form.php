@@ -15,6 +15,19 @@ if (isset($_GET['id'])) {
 }
 if (isset($_POST['btnEdit'])) {
 
+
+			$pincode_type = (isset($_POST['product_pincodes']) && $_POST['product_pincodes'] != '') ? $db->escapeString($fn->xss_clean($_POST['product_pincodes'])) : "";
+			if ($pincode_type == "all") {
+				$pincode_ids = NULL;
+			} else {
+				if (empty($_POST['pincode_ids_exc'])) {
+					$error['pincode_ids_exc'] = "<label class='alert alert-danger'>Select pincodes!.</label>";
+				} else {
+					$pincode_ids = $fn->xss_clean_array($_POST['pincode_ids_exc']);
+					$pincode_ids = implode(",", $pincode_ids);
+				}
+			}
+
 	    $category = $db->escapeString(($_POST['category']));
 	    $product_name = $db->escapeString($_POST['product_name']);
         $brand = $db->escapeString($_POST['brand']);
@@ -65,7 +78,7 @@ if (isset($_POST['btnEdit'])) {
 				$db->sql($sql);
 			}
 			
-             $sql_query = "UPDATE products SET category_id='$category',product_name='$product_name',brand='$brand',price='$price',description='$description' WHERE id =  $ID";
+             $sql_query = "UPDATE products SET category_id='$category',product_name='$product_name',brand='$brand',price='$price',type= '$pincode_type',pincodes = '$pincode_ids',description='$description' WHERE id =  $ID";
 			 $db->sql($sql_query);
 			 $res = $db->getResult();
              $update_result = $db->getResult();
@@ -160,6 +173,49 @@ if (isset($_POST['btnCancel'])) { ?>
 						   </div>
 						   <hr>
 						   <div class="row">
+								<div class="col-md-4">
+									<div class="form-group">
+										<label for="product_pincodes">Delivery Places :</label><i class="text-danger asterik">*</i>
+										<select name="product_pincodes" id="product_pincodes" class="form-control" required>
+											<option value="">Select Option</option>
+											<option value="included" <?= (!empty($res[0]['d_type']) && $res[0]['d_type'] == "included") ? 'selected' : ''; ?>>Pincode Included</option>
+											<option value="excluded" <?= (!empty($res[0]['d_type']) && $res[0]['d_type'] == "excluded") ? 'selected' : ''; ?>>Pincode Excluded</option>
+											<option value="all" <?= (!empty($res[0]['d_type']) && $res[0]['d_type'] == "all") ? 'selected' : ''; ?>>Includes All</option>
+										</select>
+										<br />
+									</div>
+								</div>
+
+								<div class="col-md-4">
+									<div class="form-group">
+										<label for='pincode_ids_exc'>Selected Pincodes <small>( Ex : 100,205, 360 <comma separated>)</small></label>
+										<select name='pincode_ids_exc[]' id='pincode_ids_exc' class='form-control' placeholder='Enter the pincode you want to allow delivery this product' multiple="multiple">
+											<?php $sql = 'select id,pincode from `deliver_pincodes` order by id desc';
+											// echo $sql;
+											$db->sql($sql);
+											$result = $db->getResult();
+											// print_r($result);
+											// return false;
+											if ($res[0]['pincodes'] != "") {
+												$pincodes = explode(",", $res[0]['pincodes']);
+												foreach ($result as $value) {
+											?>
+													<option value='<?= $value['id'] ?>' <?= (in_array($value['id'], $pincodes)) ? 'selected' : ''; ?>><?= $value['pincode']  ?></option>
+												<?php }
+											} else {
+												foreach ($result as $value) { ?>
+													<option value='<?= $value['id'] ?>'><?= $value['pincode']  ?></option>
+
+											<?php }
+											} ?>
+
+										</select>
+									</div>
+								</div>
+
+                            </div>
+							<br>
+						  <div class="row">
 							    <div class="form-group">
 									 <div class="col-md-4">
 										<label for="exampleInputEmail1">Description</label><i class="text-danger asterik">*</i><?php echo isset($error['description']) ? $error['description'] : ''; ?>
@@ -173,7 +229,6 @@ if (isset($_POST['btnCancel'])) { ?>
 									 </div>
 								</div>
 						   </div>
-						   <hr>
 						   
 					
 						</div><!-- /.box-body -->
@@ -189,6 +244,36 @@ if (isset($_POST['btnCancel'])) { ?>
 </section>
 
 <div class="separator"> </div>
+<script>
+	$('#pincode_ids_inc').select2({
+        width: 'element',
+        placeholder: 'type in pincode to search',
+
+    });
+
+    $(document).ready(function() {
+        var val = $('#product_pincodes').val();
+        if (val == "all") {
+            $('#pincode_ids_exc').prop('disabled', true);
+        } else {
+            $('#pincode_ids_exc').prop('disabled', false);
+        }
+    });
+
+    $('#product_pincodes').on('change', function() {
+        var val = $('#product_pincodes').val();
+        if (val == "included" || val == "excluded") {
+            $('#pincode_ids_exc').prop('disabled', false);
+        } else {
+            $('#pincode_ids_exc').prop('disabled', true);
+        }
+    });
+    $('#pincode_ids_exc').select2({
+        width: 'element',
+        placeholder: 'type in pincode to search',
+
+    });
+</script>
 <script>
     function readURL(input) {
             if (input.files && input.files[0]) {
