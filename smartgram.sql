@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 07, 2022 at 08:30 AM
+-- Generation Time: Nov 14, 2022 at 12:33 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -72,7 +72,7 @@ CREATE TABLE `appointments` (
 --
 
 INSERT INTO `appointments` (`id`, `user_id`, `doctor_id`, `name`, `mobile`, `age`, `disease`, `place`, `history`, `description`, `appointment_date`, `appointment_time`) VALUES
-(1, NULL, 1, 'kerant', '8847474844', '45', 'Bacterial Disease', 'Trichy', NULL, 'last one weeks i am injured by this', NULL, NULL),
+(1, 5, 1, 'kerant', '8847474844', '45', 'Bacterial Disease', 'Trichy', NULL, 'last one weeks i am injured by this', '09-03-2021', '04:30 PM'),
 (2, 5, 1, 'prasad', NULL, '25', 'sugar', 'sholapuram', 'nothing', 'prasad am patient', NULL, NULL),
 (3, 10, 1, 'pradf', NULL, '25', 'vvvvv', 'tvvv', 'gghh', 'vvh', NULL, NULL),
 (4, 11, 1, 'Prasas', NULL, '25', 'disease', 'kumbajb', 'bsjjsbsvs', 'hsyshbs', NULL, NULL),
@@ -182,6 +182,8 @@ INSERT INTO `deliver_pincodes` (`id`, `pincode`) VALUES
 CREATE TABLE `doctors` (
   `id` int(11) NOT NULL,
   `name` text DEFAULT NULL,
+  `mobile` text DEFAULT NULL,
+  `password` text DEFAULT NULL,
   `role` text DEFAULT NULL,
   `experience` text DEFAULT NULL,
   `fees` int(11) DEFAULT NULL,
@@ -192,12 +194,12 @@ CREATE TABLE `doctors` (
 -- Dumping data for table `doctors`
 --
 
-INSERT INTO `doctors` (`id`, `name`, `role`, `experience`, `fees`, `image`) VALUES
-(1, 'James', 'Physician ', '14 Years', 500, 'upload/doctors/1662113175.0499.jpg'),
-(2, 'Tom', 'Cardiologist', '12 Years', 600, 'upload/doctors/2171-2022-09-17.jpg'),
-(3, 'Brad', 'Orthopedic ', '13 Years', 600, 'upload/doctors/0313-2022-09-17.jpg'),
-(4, 'Sarah', 'Gynecologist', '18 Years', 600, 'upload/doctors/4249-2022-09-17.jpg'),
-(5, 'test', 'test', '3', 344, 'upload/doctors/7776-2022-10-06.png');
+INSERT INTO `doctors` (`id`, `name`, `mobile`, `password`, `role`, `experience`, `fees`, `image`) VALUES
+(1, 'James', '8428225519', 'james@134', 'Physician ', '14 Years', 500, 'upload/doctors/1662113175.0499.jpg'),
+(2, 'Tom', NULL, NULL, 'Cardiologist', '12 Years', 600, 'upload/doctors/2171-2022-09-17.jpg'),
+(3, 'Brad', NULL, NULL, 'Orthopedic ', '13 Years', 600, 'upload/doctors/0313-2022-09-17.jpg'),
+(4, 'Sarah', '9025635534', 'sarah@123', 'Gynecologist', '18 Years', 600, 'upload/doctors/4249-2022-09-17.jpg'),
+(5, 'test', NULL, NULL, 'test', '3', 344, 'upload/doctors/7776-2022-10-06.png');
 
 -- --------------------------------------------------------
 

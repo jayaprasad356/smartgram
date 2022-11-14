@@ -9,6 +9,8 @@ $fn = new custom_functions;
 if (isset($_POST['btnAdd'])) {
 
         $name = $db->escapeString(($_POST['name']));
+        $mobile = $db->escapeString(($_POST['mobile']));
+        $password = $db->escapeString(($_POST['password']));
         $role = $db->escapeString($_POST['role']);
         $experience = $db->escapeString($_POST['experience']);
         $fees = $db->escapeString($_POST['fees']);
@@ -30,6 +32,12 @@ if (isset($_POST['btnAdd'])) {
         if (empty($name)) {
             $error['name'] = " <span class='label label-danger'>Required!</span>";
         }
+        if (empty($mobile)) {
+            $error['mobile'] = " <span class='label label-danger'>Required!</span>";
+        }
+         if (empty($password)) {
+            $error['password'] = " <span class='label label-danger'>Required!</span>";
+        }
         if (empty($role)) {
             $error['role'] = " <span class='label label-danger'>Required!</span>";
         }
@@ -41,7 +49,7 @@ if (isset($_POST['btnAdd'])) {
         }
        
        
-       if (!empty($name) && !empty($role) && !empty($experience) && !empty($fees)) {
+       if (!empty($name) && !empty($mobile) && !empty($password) && !empty($role) && !empty($experience) && !empty($fees)) {
             $result = $fn->validate_image($_FILES["product_image"]);
                 // create random image file name
                 $string = '0123456789';
@@ -56,7 +64,7 @@ if (isset($_POST['btnAdd'])) {
 
             
            
-            $sql_query = "INSERT INTO doctors (name,role,experience,fees,image)VALUES('$name','$role','$experience','$fees','$upload_image')";
+            $sql_query = "INSERT INTO doctors (name,mobile,password,role,experience,fees,image)VALUES('$name','$mobile','$password','$role','$experience','$fees','$upload_image')";
             $db->sql($sql_query);
             $result = $db->getResult();
             if (!empty($result)) {
@@ -99,35 +107,47 @@ if (isset($_POST['btnAdd'])) {
                     <div class="box-body">
                            <div class="row">
                                 <div class="form-group">
-                                    <div class="col-md-4">
+                                    <div class="col-md-6">
                                             <label for="exampleInputEmail1">Name</label> <i class="text-danger asterik">*</i><?php echo isset($error['name']) ? $error['name'] : ''; ?>
                                             <input type="text" class="form-control" name="name" required>
                                     </div>
-
-                                    <div class="col-md-4">
+                                    <div class="col-md-6">
                                         <label for="exampleInputEmail1">Role</label> <i class="text-danger asterik">*</i><?php echo isset($error['role']) ? $error['role'] : ''; ?>
                                         <input type="text" class="form-control" name="role" required />
                                     </div>
                                 </div>
                             </div>
-                            <hr>
+                            <br>
                             <div class="row">
                                 <div class="form-group">
-                                    <div class="col-md-4">
+                                   <div class="col-md-6">
+                                            <label for="exampleInputEmail1">Mobile Number</label> <i class="text-danger asterik">*</i><?php echo isset($error['mobile']) ? $error['mobile'] : ''; ?>
+                                            <input type="number" class="form-control" name="mobile" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                            <label for="exampleInputEmail1">Password</label> <i class="text-danger asterik">*</i><?php echo isset($error['password']) ? $error['password'] : ''; ?>
+                                            <input type="password" class="form-control" name="password" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="form-group">
+                                    <div class="col-md-6">
                                             <label for="exampleInputEmail1">Experience</label> <i class="text-danger asterik">*</i><?php echo isset($error['experience']) ? $error['experience'] : ''; ?>
                                             <input type="text" class="form-control"  name="experience" required/>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-6">
                                             <label for="exampleInputEmail1">Fees</label> <i class="text-danger asterik">*</i><?php echo isset($error['fees']) ? $error['fees'] : ''; ?>
                                             <input type="text" class="form-control"  name="fees" required/>
                                     </div>
 
                                  </div>
                             </div>
-                            <hr>
+                            <br>
                             <div class="row">
                                 <div class="form-group">
-                                    <div class="col-md-4">
+                                    <div class="col-md-6">
                                          <label for="exampleInputFile">Profile</label> <i class="text-danger asterik">*</i><?php echo isset($error['product_image']) ? $error['product_image'] : ''; ?>
                                         <input type="file" name="product_image" onchange="readURL(this);" accept="image/png,  image/jpeg" id="product_image" required/>
                                         <img id="blah" src="#" alt="" />

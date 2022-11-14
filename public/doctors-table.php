@@ -24,6 +24,7 @@
                                     
                                     <th  data-field="id" data-sortable="true">ID</th>
                                     <th data-field="name" data-sortable="true">Name</th>
+                                    <th data-field="mobile" data-sortable="true">Mobile Number</th>
                                     <th  data-field="role" data-sortable="true">Role</th>
                                     <th  data-field="experience" data-sortable="true"> Experience</th>
                                     <th  data-field="fees" data-sortable="true">Fees</th>

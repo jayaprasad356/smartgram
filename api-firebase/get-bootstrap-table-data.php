@@ -524,7 +524,7 @@ if (isset($_GET['table']) && $_GET['table'] == 'doctors') {
 
     if (isset($_GET['search']) && !empty($_GET['search'])) {
         $search = $db->escapeString($fn->xss_clean($_GET['search']));
-        $where .= "WHERE name like '%" . $search . "%' OR role like '%" . $search . "%' OR fees like '%" . $search . "%'";
+        $where .= "WHERE name like '%" . $search . "%' OR role like '%" . $search . "%' OR fees like '%" . $search . "%'  OR mobile like '%" . $search . "%'";
     }
     if (isset($_GET['sort'])){
         $sort = $db->escapeString($_GET['sort']);
@@ -557,6 +557,7 @@ if (isset($_GET['table']) && $_GET['table'] == 'doctors') {
         $tempRow['id'] = $row['id'];
         $tempRow['name'] = $row['name'];
         $tempRow['role'] = $row['role'];
+        $tempRow['mobile'] = $row['mobile'];
         $tempRow['experience'] = $row['experience'];
         $tempRow['fees'] = $row['fees'];
         if(!empty($row['image'])){
