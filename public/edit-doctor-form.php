@@ -17,27 +17,15 @@ if (isset($_GET['id'])) {
 if (isset($_POST['btnEdit'])) {
 
 	    $name = $db->escapeString(($_POST['name']));
+		$mobile = $db->escapeString(($_POST['mobile']));
+	    $password = $db->escapeString(($_POST['password']));
 	    $role = $db->escapeString($_POST['role']);
         $experience = $db->escapeString($_POST['experience']);
         $fees = $db->escapeString($_POST['fees']);
 		$error = array();
 
-		if (empty($name)) {
-            $error['name'] = " <span class='label label-danger'>Required!</span>";
-        }
-        if (empty($role)) {
-            $error['role'] = " <span class='label label-danger'>Required!</span>";
-        }
-        if (empty($experience)) {
-            $error['experience'] = " <span class='label label-danger'>Required!</span>";
-        }
-        if (empty($fees)) {
-            $error['fees'] = " <span class='label label-danger'>Required!</span>";
-        }
 
-		
-
-		if ( !empty($name) && !empty($role) && !empty($experience) && !empty($fees)) 
+		if ( !empty($name) && !empty($mobile) && !empty($password) && !empty($role) && !empty($experience) && !empty($fees)) 
 		{
 			if ($_FILES['image']['size'] != 0 && $_FILES['image']['error'] == 0 && !empty($_FILES['image'])) {
 				//image isn't empty and update the image
@@ -62,7 +50,7 @@ if (isset($_POST['btnEdit'])) {
 				$db->sql($sql);
 			}
 			
-             $sql_query = "UPDATE doctors SET name='$name',role='$role',experience='$experience',fees='$fees' WHERE id =  $ID";
+             $sql_query = "UPDATE doctors SET name='$name',mobile='$mobile',password='$password',role='$role',experience='$experience',fees='$fees' WHERE id =  $ID";
 			 $db->sql($sql_query);
 			 $res = $db->getResult();
              $update_result = $db->getResult();
@@ -119,33 +107,47 @@ if (isset($_POST['btnCancel'])) { ?>
 					    <input type="hidden" id="old_image" name="old_image"  value="<?= $res[0]['image']; ?>">
 						   <div class="row">
 							    <div class="form-group">
-									<div class='col-md-4'>
+									<div class='col-md-6'>
 									          <label for="exampleInputEmail1">Name</label> <i class="text-danger asterik">*</i>
 											  <input type="text" class="form-control" name="name" value="<?php echo $res[0]['name']; ?>">
 									</div>
-									 <div class="col-md-4">
+									 <div class="col-md-6">
 										<label for="exampleInputEmail1">Role</label><i class="text-danger asterik">*</i>
 										<input type="text" class="form-control" name="role" value="<?php echo $res[0]['role']; ?>">
 									 </div>
 								</div>
 						   </div>
-						   <hr>
+						   <br>
+						   <div class="row">
+								<div class="form-group">
+								    <div class='col-md-6'>
+									          <label for="exampleInputEmail1">Mobile Number</label> <i class="text-danger asterik">*</i>
+											  <input type="number" class="form-control" name="mobile" value="<?php echo $res[0]['mobile']; ?>">
+									</div>
+									 <div class="col-md-6">
+										<label for="exampleInputEmail1">Password</label><i class="text-danger asterik">*</i>
+										<input type="password" class="form-control" name="password" value="<?php echo $res[0]['password']; ?>">
+									 </div>
+									
+								</div>
+						   </div>
+						   <br>
 						   <div class="row">
 							    <div class="form-group">
-									 <div class="col-md-4">
+									 <div class="col-md-6">
 										<label for="exampleInputEmail1">Experience</label><i class="text-danger asterik">*</i>
 										<input type="text" class="form-control" name="experience" value="<?php echo $res[0]['experience']; ?>">
 									 </div>
-									 <div class="col-md-4">
+									 <div class="col-md-6">
 										<label for="exampleInputEmail1">Fees</label><i class="text-danger asterik">*</i>
 										<input type="text" class="form-control" name="fees" value="<?php echo $res[0]['fees']; ?>">
 									 </div>
 								</div>
 						   </div>
-						   <hr>
+						   <br>
 						   <div class="row">
 								<div class="form-group">
-								   <div class="col-md-4">
+								   <div class="col-md-6">
 									     <label for="exampleInputFile">Image</label>
                                         
                                         <input type="file" accept="image/png,  image/jpeg" onchange="readURL(this);"  name="image" id="image">
@@ -153,7 +155,6 @@ if (isset($_POST['btnCancel'])) { ?>
 									 </div>
 								</div>
 						   </div>
-						   <hr>
 					
 						</div><!-- /.box-body -->
                        
