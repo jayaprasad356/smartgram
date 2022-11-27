@@ -101,7 +101,7 @@ if (isset($_POST['btnEdit'])) {
 // create array variable to store previous data
 $data = array();
 
-$sql_query = "SELECT * FROM products WHERE id =" . $ID;
+$sql_query = "SELECT *,products.type AS d_type FROM products WHERE id =" . $ID;
 $db->sql($sql_query);
 $res = $db->getResult();
 

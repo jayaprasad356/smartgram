@@ -99,6 +99,21 @@ class custom_functions
             }
         }
     }
+    public function get_data($columns = [], $where, $table)
+    {
+        $sql = "select ";
+        if (!empty($columns)) {
+            $columns = implode(",", $columns);
+            $sql .= " $columns from ";
+        } else {
+            $sql .= " * from ";
+        }
+        $sql .= " `$table` WHERE $where";
+        // echo $sql;
+        $this->db->sql($sql);
+        $res = $this->db->getResult();
+        return $res;
+    }
 
     public function get_settings($variable, $is_json = false)
     {

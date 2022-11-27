@@ -203,6 +203,7 @@ if (isset($_POST['btnAdd'])) {
                             </div>
          
                     </div>
+                    
                   
                     <!-- /.box-body -->
 
@@ -219,7 +220,26 @@ if (isset($_POST['btnAdd'])) {
 </section>
 
 <div class="separator"> </div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
+
+<script>
+    $('#pincode_ids_exc').prop('disabled', true);
+
+    $('#product_pincodes').on('change', function() {
+        var val = $('#product_pincodes').val();
+        if (val == "included" || val == "excluded") {
+            $('#pincode_ids_exc').prop('disabled', false);
+        } else {
+            $('#pincode_ids_exc').prop('disabled', true);
+        }
+    });
+    $('#pincode_ids_exc').select2({
+        width: 'element',
+        placeholder: 'type in pincode name to search',
+
+    });
+</script>
+
+
 <script>
     $('#add_product').validate({
 
@@ -244,28 +264,8 @@ if (isset($_POST['btnAdd'])) {
             CKEDITOR.instances[instance].setData('');
         }
     });
-    $('#pincode_ids_exc').prop('disabled', true);
 
-    $('#product_pincodes').on('change', function() {
-        var val = $('#product_pincodes').val();
-        if (val == "included" || val == "excluded") {
-            $('#pincode_ids_exc').prop('disabled', false);
-        } else {
-            $('#pincode_ids_exc').prop('disabled', true);
-        }
-    });
-    $('#pincode_ids_exc').select2({
-        width: 'element',
-        placeholder: 'type in category name to search',
 
-    });
-</script>
-<script>
-    $('#pincode_ids_inc').select2({
-        width: 'element',
-        placeholder: 'type in category name to search',
-
-    });
 </script>
 <script>
     function readURL(input) {
@@ -283,6 +283,7 @@ if (isset($_POST['btnAdd'])) {
             }
         }
 </script>
+
 
 <!--code for page clear-->
 <script>
