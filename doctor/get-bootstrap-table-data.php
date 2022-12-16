@@ -37,6 +37,7 @@ include_once('../includes/custom-functions.php');
 $fn = new custom_functions;
 
 if (isset($_GET['table']) && $_GET['table'] == 'appointments') {
+    $doctor_id = $_SESSION['doctor_id'];
 
     $offset = 0;
     $limit = 10;
@@ -55,7 +56,7 @@ if (isset($_GET['table']) && $_GET['table'] == 'appointments') {
 
     if (isset($_GET['search']) && !empty($_GET['search'])) {
         $search = $db->escapeString($fn->xss_clean($_GET['search']));
-        $where .= "WHERE name like '%" . $search . "%' OR doctor_id like '%" . $search . "%' OR mobile like '%" . $search . "%' OR place like '%" . $search . "%' OR disease like '%" . $search . "%'";
+        $where .= "AND name like '%" . $search . "%' OR doctor_id like '%" . $search . "%' OR mobile like '%" . $search . "%' OR place like '%" . $search . "%' OR disease like '%" . $search . "%'";
     }
     if (isset($_GET['sort'])){
         $sort = $db->escapeString($_GET['sort']);
@@ -65,13 +66,13 @@ if (isset($_GET['table']) && $_GET['table'] == 'appointments') {
         $order = $db->escapeString($_GET['order']);
 
     }
-    $sql = "SELECT COUNT(`id`) as total FROM `appointments` ";
+    $sql = "SELECT COUNT(`id`) as total FROM `appointments` WHERE doctor_id = '$doctor_id' ";
     $db->sql($sql);
     $res = $db->getResult();
     foreach ($res as $row)
         $total = $row['total'];
 
-    $sql = "SELECT * FROM `appointments` ". $where ." ORDER BY " . $sort . " " . $order . " LIMIT " . $offset . "," . $limit;
+    $sql = "SELECT * FROM `appointments` WHERE doctor_id = '$doctor_id' ". $where ." ORDER BY " . $sort . " " . $order . " LIMIT " . $offset . "," . $limit;
     $db->sql($sql);
     $res = $db->getResult();
 
