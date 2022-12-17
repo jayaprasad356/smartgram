@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 14, 2022 at 12:33 PM
+-- Generation Time: Dec 17, 2022 at 10:05 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -80,7 +80,7 @@ INSERT INTO `appointments` (`id`, `user_id`, `doctor_id`, `name`, `mobile`, `age
 (6, 7, 1, 'harsh', NULL, '55', 'feve', 'Ghaziabad', 'hh', 'gbxbx', NULL, NULL),
 (7, 11, 1, 'ghh', NULL, '808', 'cv', 'vvv', 'gg', 'ggg', NULL, NULL),
 (8, 11, 1, 'ffgggh', NULL, '88', 'vvbbbv', 'vvvvv', 'vvvv', 'vvvv', NULL, NULL),
-(9, 11, 1, 'ghhhhh', NULL, '25', 'cvbbbvg bhh', 'kumbakonqm', 'gbb', 'vbb', NULL, NULL);
+(9, 11, 2, 'ghhhhh', NULL, '25', 'cvbbbvg bhh', 'kumbakonqm', 'gbb', 'vbb', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -341,6 +341,26 @@ INSERT INTO `slides` (`id`, `name`, `image`, `status`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `timeslots`
+--
+
+CREATE TABLE `timeslots` (
+  `id` int(11) NOT NULL,
+  `date` date DEFAULT NULL,
+  `start_time` text DEFAULT NULL,
+  `end_time` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `timeslots`
+--
+
+INSERT INTO `timeslots` (`id`, `date`, `start_time`, `end_time`) VALUES
+(2, '2022-11-30', '12:08', '04:08');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `users`
 --
 
@@ -486,6 +506,12 @@ ALTER TABLE `slides`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `timeslots`
+--
+ALTER TABLE `timeslots`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -572,6 +598,12 @@ ALTER TABLE `settings`
 --
 ALTER TABLE `slides`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+
+--
+-- AUTO_INCREMENT for table `timeslots`
+--
+ALTER TABLE `timeslots`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `users`

@@ -162,30 +162,12 @@ $fn = new custom_functions();
                              <span>Appointments</span>
                         </a>
                     </li>
-                    <!-- <li class="treeview">
-                        <a href="used_vehicles_orders.php">
-                            <i class="fa fa-shopping-cart"></i> <span>Used Vehicle Orders</span>
+                    <li class="treeview">
+                        <a href="timeslots.php">
+                        <i class="glyphicon glyphicon-time"></i>   
+                            <span>Timeslots</span>
                         </a>
                     </li>
-                    <li class="treeview">
-                        <a href="rental_vehicles.php">
-                            <i class="fa fa-bus"></i> <span>Rental Vehicles</span>
-                        </a>
-                    </li>
-                    <li class="treeview">
-                        <a href="rental_orders.php">
-                            <i class="fa fa-shopping-cart"></i> <span>Rental Orders</span>
-                        </a>
-                    </li>
-                    <li class="treeview">
-                        <a href="#">
-                            <i class="fa fa-wrench"></i>
-                            <span>Services</span>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li><a href="services.php"><i class="fa fa-sliders"></i> Manage Services</a></li>
-                        </ul>
-                    </li> -->
                 </ul>
             </section>
             <!-- /.sidebar -->
