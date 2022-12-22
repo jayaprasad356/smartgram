@@ -79,13 +79,14 @@ $timeslot_id = $db->escapeString($_POST['timeslot_id']);
 $name = $db->escapeString($_POST['name']);
 $age = $db->escapeString($_POST['age']);
 $disease = $db->escapeString($_POST['disease']);
+$mobile = $db->escapeString($_POST['mobile']);
 $place = $db->escapeString($_POST['place']);
 $history = $db->escapeString($_POST['history']);
 $description = $db->escapeString($_POST['description']);
 $appointment_date = $db->escapeString($_POST['appointment_date']);
 $appointment_time = $db->escapeString($_POST['appointment_time']);
 
-$sql = "INSERT INTO appointments(`user_id`,`doctor_id`,`timeslot_id`,`name`,`age`,`disease`,`place`,`history`,`description`,`appointment_date`,`appointment_time`)VALUES('$user_id','$doctor_id','$timeslot_id','$name','$age','$disease','$place','$history','$description','$appointment_date','$appointment_time')";
+$sql = "INSERT INTO appointments(`user_id`,`doctor_id`,`timeslot_id`,`name`,`age`,`disease`,`place`,`history`,`description`,`appointment_date`,`appointment_time`,`mobile`)VALUES('$user_id','$doctor_id','$timeslot_id','$name','$age','$disease','$place','$history','$description','$appointment_date','$appointment_time','$mobile')";
 $db->sql($sql);
 $res = $db->getResult();
 $response['success'] = true;
