@@ -25,6 +25,12 @@ if (empty($_POST['doctor_id'])) {
     print_r(json_encode($response));
     return false;
 }
+if (empty($_POST['timeslot_id'])) {
+    $response['success'] = false;
+    $response['message'] = "Timeslot Id is Empty";
+    print_r(json_encode($response));
+    return false;
+}
 if (empty($_POST['name'])) {
     $response['success'] = false;
     $response['message'] = "Name is Empty";
@@ -69,6 +75,7 @@ if (empty($_POST['description'])) {
 }
 $user_id = $db->escapeString($_POST['user_id']);
 $doctor_id = $db->escapeString($_POST['doctor_id']);
+$timeslot_id = $db->escapeString($_POST['timeslot_id']);
 $name = $db->escapeString($_POST['name']);
 $age = $db->escapeString($_POST['age']);
 $disease = $db->escapeString($_POST['disease']);
@@ -78,7 +85,7 @@ $description = $db->escapeString($_POST['description']);
 $appointment_date = $db->escapeString($_POST['appointment_date']);
 $appointment_time = $db->escapeString($_POST['appointment_time']);
 
-$sql = "INSERT INTO appointments(`user_id`,`doctor_id`,`name`,`age`,`disease`,`place`,`history`,`description`,`appointment_date`,`appointment_time`)VALUES('$user_id','$doctor_id','$name','$age','$disease','$place','$history','$description','$appointment_date','$appointment_time')";
+$sql = "INSERT INTO appointments(`user_id`,`doctor_id`,`timeslot_id`,`name`,`age`,`disease`,`place`,`history`,`description`,`appointment_date`,`appointment_time`)VALUES('$user_id','$doctor_id','$timeslot_id','$name','$age','$disease','$place','$history','$description','$appointment_date','$appointment_time')";
 $db->sql($sql);
 $res = $db->getResult();
 $response['success'] = true;

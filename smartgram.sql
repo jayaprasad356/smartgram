@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 17, 2022 at 10:05 AM
+-- Generation Time: Dec 22, 2022 at 05:32 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -56,6 +56,7 @@ CREATE TABLE `appointments` (
   `id` int(11) NOT NULL,
   `user_id` int(11) DEFAULT NULL,
   `doctor_id` int(11) DEFAULT NULL,
+  `timeslot_id` int(11) DEFAULT NULL,
   `name` text DEFAULT NULL,
   `mobile` text DEFAULT NULL,
   `age` text DEFAULT NULL,
@@ -71,16 +72,17 @@ CREATE TABLE `appointments` (
 -- Dumping data for table `appointments`
 --
 
-INSERT INTO `appointments` (`id`, `user_id`, `doctor_id`, `name`, `mobile`, `age`, `disease`, `place`, `history`, `description`, `appointment_date`, `appointment_time`) VALUES
-(1, 5, 1, 'kerant', '8847474844', '45', 'Bacterial Disease', 'Trichy', NULL, 'last one weeks i am injured by this', '09-03-2021', '04:30 PM'),
-(2, 5, 1, 'prasad', NULL, '25', 'sugar', 'sholapuram', 'nothing', 'prasad am patient', NULL, NULL),
-(3, 10, 1, 'pradf', NULL, '25', 'vvvvv', 'tvvv', 'gghh', 'vvh', NULL, NULL),
-(4, 11, 1, 'Prasas', NULL, '25', 'disease', 'kumbajb', 'bsjjsbsvs', 'hsyshbs', NULL, NULL),
-(5, 9, 1, 'lala', NULL, '40', 'diabeties', 'delhi', 'heart attack', 'about to die.', NULL, NULL),
-(6, 7, 1, 'harsh', NULL, '55', 'feve', 'Ghaziabad', 'hh', 'gbxbx', NULL, NULL),
-(7, 11, 1, 'ghh', NULL, '808', 'cv', 'vvv', 'gg', 'ggg', NULL, NULL),
-(8, 11, 1, 'ffgggh', NULL, '88', 'vvbbbv', 'vvvvv', 'vvvv', 'vvvv', NULL, NULL),
-(9, 11, 2, 'ghhhhh', NULL, '25', 'cvbbbvg bhh', 'kumbakonqm', 'gbb', 'vbb', NULL, NULL);
+INSERT INTO `appointments` (`id`, `user_id`, `doctor_id`, `timeslot_id`, `name`, `mobile`, `age`, `disease`, `place`, `history`, `description`, `appointment_date`, `appointment_time`) VALUES
+(1, 5, 1, 2, 'kerant', '8847474844', '45', 'Bacterial Disease', 'Trichy', NULL, 'last one weeks i am injured by this', '09-03-2021', '04:30 PM'),
+(2, 5, 1, NULL, 'prasad', NULL, '25', 'sugar', 'sholapuram', 'nothing', 'prasad am patient', NULL, NULL),
+(3, 10, 1, NULL, 'pradf', NULL, '25', 'vvvvv', 'tvvv', 'gghh', 'vvh', NULL, NULL),
+(4, 11, 1, NULL, 'Prasas', NULL, '25', 'disease', 'kumbajb', 'bsjjsbsvs', 'hsyshbs', NULL, NULL),
+(5, 9, 1, NULL, 'lala', NULL, '40', 'diabeties', 'delhi', 'heart attack', 'about to die.', NULL, NULL),
+(6, 7, 1, NULL, 'harsh', NULL, '55', 'feve', 'Ghaziabad', 'hh', 'gbxbx', NULL, NULL),
+(7, 11, 4, 1, 'ghh', NULL, '808', 'cv', 'vvv', 'gg', 'ggg', NULL, NULL),
+(8, 11, 1, NULL, 'ffgggh', NULL, '88', 'vvbbbv', 'vvvvv', 'vvvv', 'vvvv', NULL, NULL),
+(9, 11, 2, NULL, 'ghhhhh', NULL, '25', 'cvbbbvg bhh', 'kumbakonqm', 'gbb', 'vbb', NULL, NULL),
+(11, 9, 1, 2, 'kartyhi', NULL, '56', 'sugar', 'Kundoor', 'three weeks', 'I can\'t wait for the next weeek', '2022-01-12', '01:30 AM');
 
 -- --------------------------------------------------------
 
@@ -346,6 +348,7 @@ INSERT INTO `slides` (`id`, `name`, `image`, `status`) VALUES
 
 CREATE TABLE `timeslots` (
   `id` int(11) NOT NULL,
+  `doctor_id` int(11) DEFAULT NULL,
   `date` date DEFAULT NULL,
   `start_time` text DEFAULT NULL,
   `end_time` text DEFAULT NULL
@@ -355,8 +358,9 @@ CREATE TABLE `timeslots` (
 -- Dumping data for table `timeslots`
 --
 
-INSERT INTO `timeslots` (`id`, `date`, `start_time`, `end_time`) VALUES
-(2, '2022-11-30', '12:08', '04:08');
+INSERT INTO `timeslots` (`id`, `doctor_id`, `date`, `start_time`, `end_time`) VALUES
+(1, 4, '2022-12-24', '09:32', '01:29'),
+(2, 1, '2022-12-30', '22:33', '03:37');
 
 -- --------------------------------------------------------
 
@@ -537,7 +541,7 @@ ALTER TABLE `addresses`
 -- AUTO_INCREMENT for table `appointments`
 --
 ALTER TABLE `appointments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `cart`

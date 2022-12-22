@@ -103,7 +103,7 @@ if (isset($_GET['table']) && $_GET['table'] == 'appointments') {
 }
 
 if (isset($_GET['table']) && $_GET['table'] == 'timeslots') {
-    // $doctor_id = $_SESSION['doctor_id'];
+    $doctor_id = $_SESSION['doctor_id'];
 
     $offset = 0;
     $limit = 10;
@@ -130,13 +130,13 @@ if (isset($_GET['table']) && $_GET['table'] == 'timeslots') {
     if (isset($_GET['order'])){
         $order = $db->escapeString($_GET['order']);
     }
-    $sql = "SELECT COUNT(`id`) as total FROM `timeslots`";
+    $sql = "SELECT COUNT(`id`) as total FROM `timeslots` WHERE doctor_id = '$doctor_id' ";
     $db->sql($sql);
     $res = $db->getResult();
     foreach ($res as $row)
         $total = $row['total'];
 
-    $sql = "SELECT * FROM `timeslots` " . $where . " ORDER BY " . $sort . " " . $order . " LIMIT " . $offset . "," . $limit;
+    $sql = "SELECT * FROM `timeslots` WHERE doctor_id = '$doctor_id' ". $where . " ORDER BY " . $sort . " " . $order . " LIMIT " . $offset . "," . $limit;
     $db->sql($sql);
     $res = $db->getResult();
         

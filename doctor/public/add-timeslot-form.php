@@ -29,7 +29,7 @@ if (isset($_POST['btnAdd'])) {
 
         if (!empty($date) && !empty($start_time) && !empty($end_time)) {
            
-            $sql_query = "INSERT INTO timeslots (date,start_time,end_time) VALUES ('$date','$start_time','$end_time')";
+            $sql_query = "INSERT INTO timeslots (doctor_id,date,start_time,end_time) VALUES ('$doctor_id','$date','$start_time','$end_time')";
             $db->sql($sql_query);
             $result = $db->getResult();
             if (!empty($result)) {
@@ -115,11 +115,8 @@ if (isset($_POST['btnAdd'])) {
         ignore: [],
         debug: false,
         rules: {
-            date: "required",
-            model: "required",
-            price:"required",
-            start_time:"required",
-            insurance:"required",
+            start_time: "required",
+            end_time: "required",
         }
     });
     $('#btnClear').on('click', function() {
