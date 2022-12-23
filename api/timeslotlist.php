@@ -19,7 +19,7 @@ if (empty($_POST['doctor_id'])) {
 }
 $doctor_id = $db->escapeString($_POST['doctor_id']);
 
-$sql = "SELECT * FROM `timeslots` WHERE doctor_id= $doctor_id";
+$sql = "SELECT * FROM `timeslots` WHERE doctor_id ='$doctor_id' AND date IN (SELECT date FROM timeslots GROUP BY date HAVING COUNT(*) > 1) AND start_time IN (SELECT start_time FROM timeslots GROUP BY start_time HAVING COUNT(*) > 1) LIMIT 1";
 $db->sql($sql);
 $res = $db->getResult();
 $num = $db->numRows($res);
